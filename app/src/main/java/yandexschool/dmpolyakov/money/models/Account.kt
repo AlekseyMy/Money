@@ -1,5 +1,8 @@
 package yandexschool.dmpolyakov.money.models
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcelable
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.parcel.Parcelize
@@ -11,13 +14,24 @@ import java.math.BigDecimal
 import java.text.DecimalFormat
 
 @Parcelize
+@Entity
 data class Account(
         var title: String,
+        @Ignore
         var amount: BigDecimal,
+        @Ignore
         val currency: Currency,
+        @Ignore
         val operations: ArrayList<FinanceOperation> = ArrayList(),
-        val id: String = ""
+        @PrimaryKey(autoGenerate = true)
+        private var id: Long
 ) : Parcelable, IComparableItem {
+
+    constructor(): this("",
+            BigDecimal.ONE,
+            Currency.Dollar,
+            arrayListOf<FinanceOperation>(),
+            0)
 
     val balance
         get() = DecimalFormat("0.00").format(amount) + " ${currency.sign}"
@@ -32,5 +46,8 @@ data class Account(
     }
 
     override fun id() = id
+    fun setId(value: Long) {
+        id = value
+    }
     override fun content() = "$title $amount $currency"
 }

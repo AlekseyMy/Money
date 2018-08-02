@@ -1,5 +1,7 @@
 package yandexschool.dmpolyakov.money.models
 
+import android.arch.persistence.room.*
+import android.arch.persistence.room.ForeignKey.CASCADE
 import android.os.Parcelable
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.parcel.Parcelize
@@ -10,16 +12,38 @@ import yandexschool.dmpolyakov.money.OperationType
 import java.math.BigDecimal
 
 @Parcelize
+@Entity(foreignKeys = [
+     ForeignKey(
+             entity = Account::class,
+             parentColumns = ["id"],
+             childColumns = ["account_key"],
+             onDelete = CASCADE
+     )]
+)
 data class FinanceOperation(
+        @PrimaryKey(autoGenerate = true)
+        private var id: Long,
         var title: String,
+        @Ignore
         val amount: BigDecimal,
+        @Ignore
         val type: OperationType,
+        @Ignore
         val category: OperationCategory,
+        @Ignore
         var currency: Currency,
         var date: String,
-        var id: String = ""
+        @ColumnInfo(name = "account_key")
+        var accountKey: Long
 
 ) : Parcelable, IComparableItem {
+
+    constructor(): this(0, "", BigDecimal.ONE,
+            OperationType.Income,
+            OperationCategory.Education,
+            Currency.Dollar,
+            "",
+            0)
 
     fun getDifferenceInRubbles(): BigDecimal {
         val rubbles = when (currency) {
@@ -34,5 +58,8 @@ data class FinanceOperation(
     }
 
     override fun id() = id
+    fun setId(value: Long) {
+        id = value
+    }
     override fun content() = "$title$amount$type$currency$date"
 }

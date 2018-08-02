@@ -10,9 +10,11 @@ import yandexschool.dmpolyakov.money.OperationCategory
 import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.models.FinanceOperation
+import yandexschool.dmpolyakov.money.storage.AppDatabase
+import javax.inject.Inject
 
 
-class AccountRepositoryImpl : AccountRepository {
+class AccountRepositoryImpl @Inject constructor(var db: AppDatabase): AccountRepository {
 
     private val fakeAccounts = ArrayList<Account>()
     override val subjectFakeAccounts: Subject<List<Account>> = BehaviorSubject.create<List<Account>>()
@@ -22,19 +24,23 @@ class AccountRepositoryImpl : AccountRepository {
     }
 
     override fun getAccounts(): Single<ArrayList<Account>> =
-            Single.fromObservable(Observable.fromArray(fakeAccounts))
+//            Single.fromObservable(Observable.fromArray(fakeAccounts))
+            Single.just(db.accountDao.getAll() as ArrayList<Account>)
 
     override fun addAccount(account: Account): Completable {
-        fakeAccounts.add(account.copy(id = (fakeAccounts.size + 1).toLong()))
-        subjectFakeAccounts.onNext(fakeAccounts)
-
-        fakeAccounts.sortWith(Comparator { a, b -> if (a.balance > b.balance) 0 else 1 })
+//        fakeAccounts.add(account.copy(id = (fakeAccounts.size + 1).toLong()))
+//        subjectFakeAccounts.onNext(fakeAccounts)
+//
+//        fakeAccounts.sortWith(Comparator { a, b -> if (a.balance > b.balance) 0 else 1 })
+//        return Completable.complete()
+        db.accountDao.insert(account)
         return Completable.complete()
     }
 
     override fun getAccount(id: Long): Single<Account> {
-        return Single.just(fakeAccounts.find { it.id() == id }
-                ?: throw Exception("Account not found"))
+//        return Single.just(fakeAccounts.find { it.id() == id }
+//                ?: throw Exception("Account not found"))
+        return Single.just(db.accountDao.getById(id))
     }
 
     override fun addFinanceOperation(accountId: Long, operation: FinanceOperation): Completable {
@@ -44,6 +50,7 @@ class AccountRepositoryImpl : AccountRepository {
         account.addFinanceOperation(operation)
         subjectFakeAccounts.onNext(fakeAccounts)
         return Completable.complete()
+
     }
 
     override fun renameAccount(accountId: Long, title: String): Completable {

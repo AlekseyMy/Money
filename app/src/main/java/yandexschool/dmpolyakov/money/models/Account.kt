@@ -1,9 +1,6 @@
 package yandexschool.dmpolyakov.money.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
+import android.arch.persistence.room.*
 import android.os.Parcelable
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.parcel.Parcelize
@@ -23,7 +20,7 @@ data class Account(
         var amount: BigDecimal,
         var currency: Currency,
         @Ignore
-        val operations: ArrayList<FinanceOperation> = ArrayList(),
+        var operations: MutableList<FinanceOperation>,
         @PrimaryKey(autoGenerate = true)
         private var id: Long
 ) : Parcelable, IComparableItem {

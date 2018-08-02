@@ -1,6 +1,7 @@
 package yandexschool.dmpolyakov.money.storage
 
 import android.arch.persistence.room.*
+import io.reactivex.Observable
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 
 @Dao

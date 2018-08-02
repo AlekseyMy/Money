@@ -77,6 +77,7 @@ android {
 
         // Room
         implementation "android.arch.persistence.room:runtime:$roomVersion"
+        implementation "android.arch.persistence.room:rxjava2:$roomVersion"
         kapt "android.arch.persistence.room:compiler:$roomVersion"
 
 

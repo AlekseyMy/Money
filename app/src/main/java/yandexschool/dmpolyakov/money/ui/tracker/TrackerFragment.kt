@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_tracker.*
 import yandexschool.dmpolyakov.money.Currency
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.Account
+import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.ui.MainActivity
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpFragment
@@ -110,6 +111,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                                 title = title?.editText?.text.toString(),
                                 amount = BigDecimal(amount),
                                 currency = currency?.selectedItem as Currency,
+                                operations = mutableListOf<FinanceOperation>(),
                                 id = 0L))
 
                 dismiss()

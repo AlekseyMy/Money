@@ -3,11 +3,13 @@ package yandexschool.dmpolyakov.money.models
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
 import android.os.Parcelable
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.parcel.Parcelize
 import yandexschool.dmpolyakov.money.Currency
 import yandexschool.dmpolyakov.money.OperationType
+import yandexschool.dmpolyakov.money.models.converters.*
 import yandexschool.dmpolyakov.money.utils.toDollars
 import yandexschool.dmpolyakov.money.utils.toRubbles
 import java.math.BigDecimal
@@ -15,12 +17,11 @@ import java.text.DecimalFormat
 
 @Parcelize
 @Entity
+@TypeConverters(AmountConverter::class, CurrencyConverter::class)
 data class Account(
         var title: String,
-        @Ignore
         var amount: BigDecimal,
-        @Ignore
-        val currency: Currency,
+        var currency: Currency,
         @Ignore
         val operations: ArrayList<FinanceOperation> = ArrayList(),
         @PrimaryKey(autoGenerate = true)
@@ -28,7 +29,7 @@ data class Account(
 ) : Parcelable, IComparableItem {
 
     constructor(): this("",
-            BigDecimal.ONE,
+            BigDecimal.valueOf(0.0),
             Currency.Dollar,
             arrayListOf<FinanceOperation>(),
             0)

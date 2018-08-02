@@ -22,10 +22,10 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
     companion object {
         private const val EXTRA_ACCOUNT_ID = "account_id"
 
-        fun newInstance(accountId: String): AccountFragment {
+        fun newInstance(accountId: Long): AccountFragment {
             val fragment = AccountFragment()
             fragment.arguments = Bundle(1).apply {
-                putString(EXTRA_ACCOUNT_ID, accountId)
+                putLong(EXTRA_ACCOUNT_ID, accountId)
             }
             return fragment
         }

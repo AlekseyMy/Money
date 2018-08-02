@@ -9,6 +9,10 @@ import yandexschool.dmpolyakov.money.Currency
 import yandexschool.dmpolyakov.money.DOLLAR_TO_RUBBLE
 import yandexschool.dmpolyakov.money.OperationCategory
 import yandexschool.dmpolyakov.money.OperationType
+import yandexschool.dmpolyakov.money.models.converters.AmountConverter
+import yandexschool.dmpolyakov.money.models.converters.CurrencyConverter
+import yandexschool.dmpolyakov.money.models.converters.OperationCategoryConverter
+import yandexschool.dmpolyakov.money.models.converters.OperationTypeConverter
 import java.math.BigDecimal
 
 @Parcelize
@@ -20,15 +24,15 @@ import java.math.BigDecimal
              onDelete = CASCADE
      )]
 )
+@TypeConverters(AmountConverter::class,
+        CurrencyConverter::class,
+        OperationTypeConverter::class,
+        OperationCategoryConverter::class)
 data class FinanceOperation(
         var title: String,
-        @Ignore
-        val amount: BigDecimal,
-        @Ignore
-        val type: OperationType,
-        @Ignore
-        val category: OperationCategory,
-        @Ignore
+        var amount: BigDecimal,
+        var type: OperationType,
+        var category: OperationCategory,
         var currency: Currency,
         var date: String,
         @ColumnInfo(name = "account_key")

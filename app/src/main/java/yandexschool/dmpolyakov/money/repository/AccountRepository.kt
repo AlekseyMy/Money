@@ -13,7 +13,7 @@ interface AccountRepository {
 
     fun getAccounts(): Single<ArrayList<Account>>
     fun addAccount(account: Account): Completable
-    fun getAccount(id: String): Single<Account>
-    fun addFinanceOperation(accountId: String, operation: FinanceOperation): Completable
-    fun renameAccount(accountId: String, title: String): Completable
+    fun getAccount(id: Long): Single<Account>
+    fun addFinanceOperation(accountId: Long, operation: FinanceOperation): Completable
+    fun renameAccount(accountId: Long, title: String): Completable
 }

@@ -21,8 +21,6 @@ import java.math.BigDecimal
      )]
 )
 data class FinanceOperation(
-        @PrimaryKey(autoGenerate = true)
-        private var id: Long,
         var title: String,
         @Ignore
         val amount: BigDecimal,
@@ -34,15 +32,18 @@ data class FinanceOperation(
         var currency: Currency,
         var date: String,
         @ColumnInfo(name = "account_key")
-        var accountKey: Long
+        var accountKey: Long,
+        @PrimaryKey(autoGenerate = true)
+        private var id: Long
 
 ) : Parcelable, IComparableItem {
 
-    constructor(): this(0, "", BigDecimal.ONE,
+    constructor(): this("", BigDecimal.ONE,
             OperationType.Income,
             OperationCategory.Education,
             Currency.Dollar,
             "",
+            0,
             0)
 
     fun getDifferenceInRubbles(): BigDecimal {

@@ -131,7 +131,9 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                                 amount = BigDecimal(amount?.editText?.text?.toString()),
                                 type = operationType,
                                 category = category?.selectedItem as OperationCategory,
-                                date = currentDate
+                                date = currentDate,
+                                accountKey = 0L, // remove
+                                id = 0L //remove
                         )
                 )
 

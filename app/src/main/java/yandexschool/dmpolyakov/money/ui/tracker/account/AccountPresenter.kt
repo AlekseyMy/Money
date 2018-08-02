@@ -13,15 +13,15 @@ class AccountPresenter @Inject constructor(
         val router: MainRouter,
         val accountRep: AccountRepository) : BaseMvpPresenter<AccountView>(router) {
 
-    private var accountId = ""
+    private var accountId = 0L//""
 
     override fun onFirstViewAttach() {
         bind(onUi(accountRep.subjectFakeAccounts).subscribe {
-            updateAccount(it.find { it.id == accountId }!!)
+            updateAccount(it.find { it.id() == accountId }!!)
         })
     }
 
-    fun initAccount(id: String) {
+    fun initAccount(id: Long) {
         accountId = id
         bind(onUi(accountRep.getAccount(id)).subscribe(
                 { updateAccount(it) },

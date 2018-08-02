@@ -24,7 +24,7 @@ class OperationsPresenter @Inject constructor(
     }
 
     fun addOperation(operation: FinanceOperation) {
-        bind((accountRep.addFinanceOperation(account.id, operation)
+        bind((accountRep.addFinanceOperation(account.id(), operation)
                 .subscribe({
                     updateAccount()
                 }, {
@@ -34,7 +34,7 @@ class OperationsPresenter @Inject constructor(
     }
 
     private fun updateAccount() {
-        bind(onUi(accountRep.getAccount(account.id)).subscribe(
+        bind(onUi(accountRep.getAccount(account.id())).subscribe(
                 {
                     viewState.showOperations(it.operations)
                 },

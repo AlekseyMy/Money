@@ -109,7 +109,8 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                         Account(
                                 title = title?.editText?.text.toString(),
                                 amount = BigDecimal(amount),
-                                currency = currency?.selectedItem as Currency))
+                                currency = currency?.selectedItem as Currency,
+                                id = 0L))
 
                 dismiss()
             }

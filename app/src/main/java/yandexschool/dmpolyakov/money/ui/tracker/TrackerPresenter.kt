@@ -31,7 +31,7 @@ class TrackerPresenter @Inject constructor(
     }
 
     fun onAccountClick(account: Account) {
-        router.showAccountScreen(account.id)
+        router.showAccountScreen(account.id())
     }
 
     private fun updateAccounts() {

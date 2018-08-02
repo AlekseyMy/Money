@@ -51,7 +51,7 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
             router.back()
         }
 
-        presenter.initAccount(arguments!!.getString(EXTRA_ACCOUNT_ID, ""))
+        presenter.initAccount(arguments!!.getLong(EXTRA_ACCOUNT_ID, 0L))
     }
 
     override fun showTitle(title: String) {

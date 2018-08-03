@@ -15,10 +15,8 @@ object AccountModule {
 
     @JvmStatic
     @Provides
-    fun provideAccountPresenter(router: MainRouter,
-                                accountRep: AccountRepository,
-                                financeOperationRep: FinanceOperationRepository) =
-            AccountPresenter(router, accountRep, financeOperationRep)
+    fun provideAccountPresenter(router: MainRouter, accountRep: AccountRepository) =
+            AccountPresenter(router, accountRep)
 
     @JvmStatic
     @Provides
@@ -30,6 +28,5 @@ object AccountModule {
     @Provides
     fun provideAccountSettingsPresenter(router: MainRouter, accountRep: AccountRepository) =
             AccountSettingsPresenter(router, accountRep)
-
-
+    
 }

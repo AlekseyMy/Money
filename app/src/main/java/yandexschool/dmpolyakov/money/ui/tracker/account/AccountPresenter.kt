@@ -13,8 +13,7 @@ import javax.inject.Inject
 @InjectViewState
 class AccountPresenter @Inject constructor(
         val router: MainRouter,
-        private val accountRep: AccountRepository,
-        private val financeOperationRep: FinanceOperationRepository) : BaseMvpPresenter<AccountView>(router) {
+        private val accountRep: AccountRepository) : BaseMvpPresenter<AccountView>(router) {
 
     private var accountId = 0L
 
@@ -33,28 +32,9 @@ class AccountPresenter @Inject constructor(
     }
 
     private fun updateAccount(account: Account) {
-//        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
-//                .map {
-//                    account.amount = BigDecimal("0")
-//                    it.forEach { account.amount += it.amount }
-//                }
-//                .subscribe({
-//                    syncAccount(account)
-                    viewState.showTitle(account.title)
-                    viewState.showBalance(account.balance)
-                    viewState.showTabs(account)
-//                }, {
-//                    viewState.showError(it)
-//                })
-//        )
-    }
-
-    private fun syncAccount(account: Account) {
-        bind(onUi(accountRep.updateAccount(account))
-                .subscribe({}, {
-                    viewState.showError(it)
-                })
-        )
+        viewState.showTitle(account.title)
+        viewState.showBalance(account.balance)
+        viewState.showTabs(account)
     }
 
     override fun getScreenTag() = "AccountPresenter"

@@ -32,4 +32,6 @@
     <string name="rename">Rename</string>
     <string name="ok">OK</string>
     <string name="finance_history">Operations history</string>
+    <string name="Income">Income</string>
+    <string name="Expense">Expense</string>
 </resources>

@@ -22,10 +22,10 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
     companion object {
         private const val EXTRA_ACCOUNT_ID = "account_id"
 
-        fun newInstance(accountId: String): AccountFragment {
+        fun newInstance(accountId: Long): AccountFragment {
             val fragment = AccountFragment()
             fragment.arguments = Bundle(1).apply {
-                putString(EXTRA_ACCOUNT_ID, accountId)
+                putLong(EXTRA_ACCOUNT_ID, accountId)
             }
             return fragment
         }
@@ -51,7 +51,7 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
             router.back()
         }
 
-        presenter.initAccount(arguments!!.getString(EXTRA_ACCOUNT_ID, ""))
+        presenter.initAccount(arguments!!.getLong(EXTRA_ACCOUNT_ID, 0L))
     }
 
     override fun showTitle(title: String) {
@@ -66,11 +66,13 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         tabs.setupWithViewPager(viewPager)
 
         val fragmentOperations = OperationsFragment()
-        val bundle = Bundle()
-        bundle.putParcelable("account", account)
+        var bundle = Bundle()
+        bundle.putLong("accountId", account.id())
         fragmentOperations.arguments = bundle
 
         val accountSettingsFragment = AccountSettingsFragment()
+        bundle = Bundle()
+        bundle.putParcelable("account", account)
         accountSettingsFragment.arguments = bundle
 
         val adapter = ViewPagerAdapter(childFragmentManager)

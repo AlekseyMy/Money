@@ -33,5 +33,7 @@
     <string name="rename">Переименовать</string>
     <string name="ok">Ок</string>
     <string name="finance_history">История операций</string>
+    <string name="Income">Доход</string>
+    <string name="Expense">Расход</string>
 
 </resources>

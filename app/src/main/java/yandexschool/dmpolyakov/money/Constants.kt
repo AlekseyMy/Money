@@ -20,7 +20,7 @@ enum class OperationCategory(val icon: Int, val title: Int) {
     Education(R.drawable.ic_education, R.string.category_education),
 }
 
-enum class OperationType { Income, Expense;
+enum class OperationType(var type: Int) { Income(R.string.Income), Expense(R.string.Expense);
 
     fun getCategories(): List<OperationCategory> {
         return when (this) {

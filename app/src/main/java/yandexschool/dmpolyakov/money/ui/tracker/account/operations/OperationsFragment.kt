@@ -72,8 +72,8 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
     }
 
     override fun loadAccount() {
-        val account: Account = arguments?.getParcelable("account")!!
-        presenter.loadAccount(account)
+        val accountId: Long = arguments?.getLong("accountId")!!
+        presenter.loadAccount(accountId)
     }
 
     private fun showDialog() {
@@ -131,7 +131,9 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                                 amount = BigDecimal(amount?.editText?.text?.toString()),
                                 type = operationType,
                                 category = category?.selectedItem as OperationCategory,
-                                date = currentDate
+                                date = currentDate,
+                                accountKey = 0L, // remove
+                                id = 0L //remove
                         )
                 )
 

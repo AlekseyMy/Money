@@ -75,6 +75,12 @@ android {
         // Recycler View delegates
         implementation "com.github.liverm0r:delegateadapters:v$delegateAdaptersVersion"
 
+        // Room
+        implementation "android.arch.persistence.room:runtime:$roomVersion"
+        implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+        kapt "android.arch.persistence.room:compiler:$roomVersion"
+
+
         testImplementation "junit:junit:$junit"
         androidTestImplementation "com.android.support.test:runner:$test_runner"
         androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core"

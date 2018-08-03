@@ -34,6 +34,10 @@
     <string name="ok">Ок</string>
     <string name="finance_history">История операций</string>
     <string name="Income">Доход</string>
-    <string name="Expense">Расход</string>
+    <string name="Expense">Расходы</string>
+    <string name="repeat_across">Повторить через n дней</string>
+    <string name="canceled">Отменена</string>
+    <string name="inProgress">Осуществляется</string>
+    <string name="done">Выполнена</string>
 
 </resources>

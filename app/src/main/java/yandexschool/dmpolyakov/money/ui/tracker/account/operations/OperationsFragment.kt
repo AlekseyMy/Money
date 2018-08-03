@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -14,10 +15,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.delegateadapter.delegate.diff.DiffUtilCompositeAdapter
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.synthetic.main.fragment_operations.*
+import yandexschool.dmpolyakov.money.*
 import yandexschool.dmpolyakov.money.Currency
-import yandexschool.dmpolyakov.money.OperationCategory
-import yandexschool.dmpolyakov.money.OperationType
-import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
@@ -26,6 +25,8 @@ import yandexschool.dmpolyakov.money.ui.base.rv_delegates.EmptyStateDelegateAdap
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.OperationsDelegateAdapter
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.EmptyStateViewModel
 import yandexschool.dmpolyakov.money.ui.tracker.CurrencyArrayAdapter
+import yandexschool.dmpolyakov.money.utils.daysToMillis
+import yandexschool.dmpolyakov.money.utils.timeNow
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
@@ -87,6 +88,8 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
             val currency = findViewById<Spinner>(R.id.spinnerCurrency)
             val category = findViewById<Spinner>(R.id.spinnerCategory)
 
+            val days = findViewById<EditText>(R.id.inputDays)
+
             currency?.adapter = CurrencyArrayAdapter(context, Currency.values().toList())
             category?.adapter = CategoryArrayAdapter(context, OperationType.Income.getCategories())
 
@@ -124,6 +127,7 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                     else -> throw Exception("Unknown operation type")
                 }
 
+                val time = timeNow()
                 presenter.addOperation(
                         FinanceOperation(
                                 title = title?.editText?.text.toString(),
@@ -132,8 +136,11 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                                 type = operationType,
                                 category = category?.selectedItem as OperationCategory,
                                 date = currentDate,
-                                accountKey = 0L, // remove
-                                id = 0L //remove
+                                accountKey = 0L,
+                                id = 0L,
+                                timeStart = time,
+                                timeFinish = time + days?.text.toString().daysToMillis(),
+                                state = TransactionState.Done
                         )
                 )
 

@@ -11,10 +11,10 @@ import yandexschool.dmpolyakov.money.models.FinanceOperation
 
 interface AccountRepository {
 
-    val subjectFakeAccounts: Subject<List<Account>>
-
     fun getAccounts(): Flowable<List<Account>>
     fun addAccount(account: Account): Completable
     fun getAccount(id: Long): Flowable<Account>
     fun renameAccount(accountId: Long, title: String): Completable
+    fun updateAccount(account: Account): Completable
+
 }

@@ -66,11 +66,13 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         tabs.setupWithViewPager(viewPager)
 
         val fragmentOperations = OperationsFragment()
-        val bundle = Bundle()
-        bundle.putParcelable("account", account)
+        var bundle = Bundle()
+        bundle.putLong("accountId", account.id())
         fragmentOperations.arguments = bundle
 
         val accountSettingsFragment = AccountSettingsFragment()
+        bundle = Bundle()
+        bundle.putParcelable("account", account)
         accountSettingsFragment.arguments = bundle
 
         val adapter = ViewPagerAdapter(childFragmentManager)

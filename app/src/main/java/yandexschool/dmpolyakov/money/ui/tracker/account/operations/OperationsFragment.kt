@@ -72,8 +72,8 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
     }
 
     override fun loadAccount() {
-        val account: Account = arguments?.getParcelable("account")!!
-        presenter.loadAccount(account)
+        val accountId: Long = arguments?.getLong("accountId")!!
+        presenter.loadAccount(accountId)
     }
 
     private fun showDialog() {

@@ -17,7 +17,7 @@ import java.text.DecimalFormat
 @TypeConverters(AmountConverter::class, CurrencyConverter::class)
 data class Account(
         var title: String,
-        val amount: BigDecimal,
+        var amount: BigDecimal,
         val currency: Currency,
         @PrimaryKey(autoGenerate = true) private val id: Long
 ) : Parcelable, IComparableItem {

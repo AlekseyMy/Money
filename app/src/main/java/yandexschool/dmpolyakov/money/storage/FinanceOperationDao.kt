@@ -8,10 +8,10 @@ import yandexschool.dmpolyakov.money.models.FinanceOperation
 @Dao
 interface FinanceOperationDao {
     @Query("SELECT * FROM financeoperation")
-    fun getAll(): List<FinanceOperation>
+    fun getAll(): Flowable<List<FinanceOperation>>
 
     @Query("SELECT * FROM financeoperation WHERE id = :id")
-    fun getById(id: Long): FinanceOperation
+    fun getById(id: Long): Flowable<FinanceOperation>
 
     @Query("SELECT * FROM financeoperation  WHERE account_id = :accountId")
     fun getByAccountId(accountId: Long): Flowable<List<FinanceOperation>>

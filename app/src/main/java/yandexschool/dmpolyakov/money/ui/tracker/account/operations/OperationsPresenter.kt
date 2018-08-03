@@ -13,12 +13,11 @@ import javax.inject.Inject
 @InjectViewState
 class OperationsPresenter @Inject constructor(
         router: MainRouter,
-        val accountRep: AccountRepository,
-        val financeOperationRep: FinanceOperationRepository) : BaseMvpPresenter<OperationsView>(router) {
+        private val financeOperationRep: FinanceOperationRepository) : BaseMvpPresenter<OperationsView>(router) {
 
     override fun getScreenTag() = "OperationsPresenter"
 
-    private lateinit var account: Account
+    private var accountId: Long = 0
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -26,7 +25,7 @@ class OperationsPresenter @Inject constructor(
     }
 
     fun addOperation(operation: FinanceOperation) {
-        bind((financeOperationRep.addFinanceOperation(account.id(), operation)
+        bind((financeOperationRep.addFinanceOperation(accountId, operation)
                 .subscribe({
                     updateOperations()
                 }, {
@@ -36,25 +35,24 @@ class OperationsPresenter @Inject constructor(
     }
 
     private fun updateOperations() {
-        bind(onUi(financeOperationRep.getFinanceOperations(account.id()))
+        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
                 .subscribe({
-                    viewState.showOperations(it)
+                    viewState.showOperations(it ?: listOf())
                 }, {
                     viewState.showError(it)
                 })
         )
     }
 
-    fun loadAccount(account: Account) {
-        this.account = account
-        bind(onUi(financeOperationRep.getFinanceOperations(account.id()))
+    fun loadAccount(accountId: Long) {
+        this.accountId = accountId
+        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
                 .subscribe({
-                    viewState.showOperations(it)
+                    viewState.showOperations(it ?: listOf())
                 }, {
                     viewState.showError(it)
                 })
         )
-//        viewState.showOperations(account.operations)
     }
 
 }

@@ -27,14 +27,9 @@ class AccountRepositoryImpl @Inject constructor(var db: AppDatabase): AccountRep
     override fun getAccount(id: Long): Flowable<Account> =
             db.accountDao.getById(id)
 
-    override fun renameAccount(accountId: Long, title: String): Completable {
-//        val account = fakeAccounts.find { it.id() == accountId }
-//                ?: throw Exception("Account not found")
-//
-//        account.title = title
-//        subjectFakeAccounts.onNext(fakeAccounts)
-        return Completable.complete()
-    }
+    override fun renameAccount(accountId: Long, title: String): Completable =
+            Completable.fromAction { db.accountDao.updateTitle(title, accountId) }
+                    .subscribeOn(Schedulers.io())
 
     override fun updateAccount(account: Account): Completable =
             Completable.fromAction { db.accountDao.update(account) }.subscribeOn(Schedulers.io())

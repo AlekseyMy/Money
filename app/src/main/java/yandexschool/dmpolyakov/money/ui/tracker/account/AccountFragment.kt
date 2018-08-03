@@ -67,11 +67,10 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
 
         val fragmentOperations = OperationsFragment()
         var bundle = Bundle()
-        bundle.putLong("accountId", account.id())
+        bundle.putParcelable("account", account)
         fragmentOperations.arguments = bundle
 
         val accountSettingsFragment = AccountSettingsFragment()
-        bundle = Bundle()
         bundle.putParcelable("account", account)
         accountSettingsFragment.arguments = bundle
 

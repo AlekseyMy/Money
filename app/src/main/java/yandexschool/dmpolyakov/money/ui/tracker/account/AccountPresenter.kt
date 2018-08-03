@@ -25,7 +25,6 @@ class AccountPresenter @Inject constructor(
     fun initAccount(id: Long) {
         accountId = id
         bind(onUi(accountRep.getAccount(id)).subscribe({
-
             updateAccount(it)
         }, {
             viewState?.showError(it)
@@ -34,24 +33,20 @@ class AccountPresenter @Inject constructor(
     }
 
     private fun updateAccount(account: Account) {
-        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
-                .map {
-                    account.amount = BigDecimal("0")
-                    it.forEach { account.amount += it.amount }
-                }
-                .subscribe({
-                    syncAccount(account)
+//        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
+//                .map {
+//                    account.amount = BigDecimal("0")
+//                    it.forEach { account.amount += it.amount }
+//                }
+//                .subscribe({
+//                    syncAccount(account)
                     viewState.showTitle(account.title)
                     viewState.showBalance(account.balance)
                     viewState.showTabs(account)
-                }, {
-                    viewState.showError(it)
-                })
-        )
-    }
-
-    private fun testB() {
-        println()
+//                }, {
+//                    viewState.showError(it)
+//                })
+//        )
     }
 
     private fun syncAccount(account: Account) {

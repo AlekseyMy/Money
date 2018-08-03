@@ -9,4 +9,5 @@ import yandexschool.dmpolyakov.money.models.FinanceOperation
 abstract class AppDatabase: RoomDatabase() {
     abstract val accountDao: AccountDao
     abstract val financeOperationDao: FinanceOperationDao
+    abstract val accountFinanceOperationDao: AccountFinanceOperationDao
 }

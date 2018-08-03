@@ -15,7 +15,9 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
     override fun addFinanceOperation(accountId: Long, operation: FinanceOperation): Completable {
         operation.accountKey = accountId
         return Completable.fromAction {
-            db.financeOperationDao.insert(operation)
+            db.accountFinanceOperationDao
+                    .insertFinanceOperationAndUpdateAccount(operation, accountId, operation.amount)
+//            db.financeOperationDao.insert(operation)
         }.subscribeOn(Schedulers.io())
     }
 

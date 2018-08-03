@@ -20,7 +20,7 @@ import java.math.BigDecimal
      ForeignKey(
              entity = Account::class,
              parentColumns = ["id"],
-             childColumns = ["account_key"],
+             childColumns = ["account_id"],
              onDelete = CASCADE
      )]
 )
@@ -29,26 +29,16 @@ import java.math.BigDecimal
         OperationTypeConverter::class,
         OperationCategoryConverter::class)
 data class FinanceOperation(
-        var title: String,
-        var amount: BigDecimal,
-        var type: OperationType,
-        var category: OperationCategory,
-        var currency: Currency,
-        var date: String,
-        @ColumnInfo(name = "account_key")
-        var accountKey: Long,
-        @PrimaryKey(autoGenerate = true)
-        private var id: Long
+        val title: String,
+        val amount: BigDecimal,
+        val type: OperationType,
+        val category: OperationCategory,
+        val currency: Currency,
+        val date: String,
+        @ColumnInfo(name = "account_id") var accountKey: Long,
+        @PrimaryKey(autoGenerate = true) private val id: Long
 
 ) : Parcelable, IComparableItem {
-
-    constructor(): this("", BigDecimal.ONE,
-            OperationType.Income,
-            OperationCategory.Education,
-            Currency.Dollar,
-            "",
-            0,
-            0)
 
     fun getDifferenceInRubbles(): BigDecimal {
         val rubbles = when (currency) {
@@ -63,8 +53,6 @@ data class FinanceOperation(
     }
 
     override fun id() = id
-    fun setId(value: Long) {
-        id = value
-    }
+
     override fun content() = "$title$amount$type$currency$date"
 }

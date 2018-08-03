@@ -17,35 +17,15 @@ import java.text.DecimalFormat
 @TypeConverters(AmountConverter::class, CurrencyConverter::class)
 data class Account(
         var title: String,
-        var amount: BigDecimal,
-        var currency: Currency,
-        @Ignore
-        var operations: MutableList<FinanceOperation>,
-        @PrimaryKey(autoGenerate = true)
-        private var id: Long
+        val amount: BigDecimal,
+        val currency: Currency,
+        @PrimaryKey(autoGenerate = true) private val id: Long
 ) : Parcelable, IComparableItem {
-
-    constructor(): this("",
-            BigDecimal.valueOf(0.0),
-            Currency.Dollar,
-            arrayListOf<FinanceOperation>(),
-            0)
 
     val balance
         get() = DecimalFormat("0.00").format(amount) + " ${currency.sign}"
 
-    fun addFinanceOperation(operation: FinanceOperation) {
-        val extra = when (currency) {
-            Currency.Rubble -> operation.amount.toRubbles(operation.currency)
-            Currency.Dollar -> operation.amount.toDollars(operation.currency)
-        }
-        amount = amount.add(if (operation.type == OperationType.Income) extra else extra.negate())
-        operations.add(operation)
-    }
-
     override fun id() = id
-    fun setId(value: Long) {
-        id = value
-    }
+
     override fun content() = "$title $amount $currency"
 }

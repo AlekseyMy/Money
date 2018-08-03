@@ -111,7 +111,6 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                                 title = title?.editText?.text.toString(),
                                 amount = BigDecimal(amount),
                                 currency = currency?.selectedItem as Currency,
-                                operations = mutableListOf<FinanceOperation>(),
                                 id = 0L))
 
                 dismiss()

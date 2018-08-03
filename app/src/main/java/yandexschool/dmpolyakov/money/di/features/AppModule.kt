@@ -9,6 +9,8 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import yandexschool.dmpolyakov.money.repository.AccountRepository
 import yandexschool.dmpolyakov.money.repository.AccountRepositoryImpl
+import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
+import yandexschool.dmpolyakov.money.repository.FinanceOperationRepositoryImpl
 import yandexschool.dmpolyakov.money.storage.AppDatabase
 import yandexschool.dmpolyakov.money.ui.MainActivity
 import javax.inject.Singleton
@@ -26,7 +28,9 @@ abstract class AppModule {
         @Singleton
         @Provides
         fun provideDatabase(context: Context) =
-                Room.databaseBuilder(context, AppDatabase::class.java, "Money").build()
+                Room.databaseBuilder(context, AppDatabase::class.java, "Money")
+                        .fallbackToDestructiveMigration()  // TODO make migration
+                        .build()
 
         @JvmStatic
         @Singleton
@@ -42,6 +46,13 @@ abstract class AppModule {
         @Singleton
         @Provides
         fun provideAccountRepository(db: AppDatabase): AccountRepository = AccountRepositoryImpl(db)
+
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun provideFinanceOperationRepository(db: AppDatabase): FinanceOperationRepository =
+                FinanceOperationRepositoryImpl(db)
+
     }
 
 }

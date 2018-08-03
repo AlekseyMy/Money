@@ -18,6 +18,9 @@ interface AccountDao {
     @Update
     fun update(account: Account)
 
+    @Query("UPDATE account SET title = :accountTitle WHERE id = :accountId")
+    fun updateTitle(accountTitle: String, accountId: Long)
+
     @Delete
     fun delete(account: Account)
 }

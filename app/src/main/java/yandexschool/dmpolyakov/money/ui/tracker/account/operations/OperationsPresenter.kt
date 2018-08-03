@@ -17,7 +17,7 @@ class OperationsPresenter @Inject constructor(
 
     override fun getScreenTag() = "OperationsPresenter"
 
-    private var accountId: Long = 0
+    private lateinit var account: Account
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -25,7 +25,7 @@ class OperationsPresenter @Inject constructor(
     }
 
     fun addOperation(operation: FinanceOperation) {
-        bind((financeOperationRep.addFinanceOperation(accountId, operation)
+        bind((financeOperationRep.addFinanceOperation(account, operation)
                 .subscribe({
                     updateOperations()
                 }, {
@@ -35,7 +35,7 @@ class OperationsPresenter @Inject constructor(
     }
 
     private fun updateOperations() {
-        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
+        bind(onUi(financeOperationRep.getFinanceOperations(account.id()))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {
@@ -44,9 +44,9 @@ class OperationsPresenter @Inject constructor(
         )
     }
 
-    fun loadAccount(accountId: Long) {
-        this.accountId = accountId
-        bind(onUi(financeOperationRep.getFinanceOperations(accountId))
+    fun loadAccount(account: Account) {
+        this.account = account
+        bind(onUi(financeOperationRep.getFinanceOperations(account.id()))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {

@@ -73,31 +73,23 @@ class TrackerPresenter @Inject constructor(
         }))
     }
 
-    fun addOperationAndUpdateDelayed(operation: FinanceOperation) {
+    fun addOperation(operation: FinanceOperation) {
         val account = accounts.filter { it.id() == operation.accountKey }[0]
-        if (operation.state == FinanceOperationState.InProgress) {
-            bind(onUi(financeOperationRep.updateFinanceOperation(operation))
-                    .subscribe({}, {
-                        viewState.showError(it)
-                    })
-            )
-        }
-
-        bind((financeOperationRep.addFinanceOperationAndUpdateAccount(account,
-                operation.copy(state = FinanceOperationState.Done, id = null))
-                .subscribe({
-                }, {
-                    viewState.showError(it)
-                }))
-        )
-    }
-
-    fun updatePeriodicOperation(operation: FinanceOperation) {
-        bind(onUi(financeOperationRep.updateFinanceOperation(operation))
+        operation.accountKey = account.id()!!
+        bind(onUi(financeOperationRep.addFinanceOperationAndUpdateAccount(account, operation))
                 .subscribe({}, {
                     viewState.showError(it)
                 })
         )
+    }
+
+    fun updateOperation(operation: FinanceOperation) {
+        bind(onUi(financeOperationRep.updateFinanceOperation(operation))
+                .subscribe({
+
+                },{
+                    viewState.showError(it)
+                }))
     }
 
 }

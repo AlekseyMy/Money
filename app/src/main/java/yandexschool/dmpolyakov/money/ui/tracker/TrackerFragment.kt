@@ -166,15 +166,25 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                     days?.text.toString().daysToMillis()
 
                 accountAdapter
-                presenter.addOperationAndUpdateDelayed(financeOperation.copy(
-                        id = null,
-                        date = currentDate,
-                        timeStart = time,
-                        timeFinish = timeFinish,
-                        state = if (timeFinish > time)
-                            FinanceOperationState.InProgress
-                        else
-                            FinanceOperationState.Done))
+                financeOperation.state = FinanceOperationState.Done
+                presenter.updateOperation(financeOperation)
+                presenter.addOperation(
+                        FinanceOperation(
+                                title = title?.editText?.text.toString(),
+                                currency = currency?.selectedItem as Currency,
+                                amount = BigDecimal(amount?.editText?.text?.toString()),
+                                type = operationType,
+                                category = category?.selectedItem as OperationCategory,
+                                date = currentDate,
+                                timeStart = time,
+                                timeFinish = timeFinish,
+                                accountKey = 0,
+                                state = if (timeFinish > time)
+                                    FinanceOperationState.InProgress
+                                else
+                                    FinanceOperationState.Done
+                        )
+                )
 
                 dismiss()
                 presenter.showNext()
@@ -188,7 +198,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                 currency?.setSelection(0)
                 title?.requestFocus()
                 financeOperation.state = FinanceOperationState.Canceled
-                presenter.updatePeriodicOperation(financeOperation)
+                presenter.updateOperation(financeOperation)
                 presenter.showNext()
             }
         }

@@ -25,28 +25,18 @@ class OperationsPresenter @Inject constructor(
     }
 
     fun addOperation(operation: FinanceOperation) {
-        if (operation.state == FinanceOperationState.InProgress) {
-            operation.accountKey = account.id()!!
-            bind(onUi(financeOperationRep.addPeriodicFinanceOperation(operation.copy(id = null)))
-                    .subscribe({}, {
-                        viewState.showError(it)
-                    })
-            )
-        }
-
-        bind((financeOperationRep.addFinanceOperationAndUpdateAccount(account,
-                operation.copy(state = FinanceOperationState.Done))
-                    .subscribe({
-                        updateOperations()
-                    }, {
-                        viewState.showError(it)
-                    }))
-            )
+        bind((financeOperationRep.addFinanceOperationAndUpdateAccount(account, operation)
+                .subscribe({
+                    updateOperations()
+                }, {
+                    viewState.showError(it)
+                }))
+        )
     }
 
     private fun updateOperations() {
         bind(onUi(financeOperationRep
-                .getFinanceOperationsByIdAndInState(account.id()!!))
+                .getFinanceOperations(account.id()!!))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {
@@ -58,7 +48,7 @@ class OperationsPresenter @Inject constructor(
     fun loadAccount(account: Account) {
         this.account = account
         bind(onUi(financeOperationRep
-                .getFinanceOperationsByIdAndInState(account.id()!!))
+                .getFinanceOperations(account.id()!!))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {

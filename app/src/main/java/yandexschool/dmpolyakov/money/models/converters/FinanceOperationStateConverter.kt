@@ -6,14 +6,14 @@ import yandexschool.dmpolyakov.money.FinanceOperationState
 
 class FinanceOperationStateConverter {
     @TypeConverter
-    fun fromFinanceOperationState(financeOperationState: FinanceOperationState): Int = financeOperationState.code
+    fun fromFinanceOperationState(financeOperationState: FinanceOperationState): String = financeOperationState.name
 
     @TypeConverter
-    fun toFinanceOperationState(data: Int): FinanceOperationState =
+    fun toFinanceOperationState(data: String): FinanceOperationState =
             when (data) {
-                R.string.canceled -> FinanceOperationState.Canceled
-                R.string.inProgress -> FinanceOperationState.InProgress
-                R.string.done -> FinanceOperationState.Done
+                FinanceOperationState.Canceled.name -> FinanceOperationState.Canceled
+                FinanceOperationState.InProgress.name -> FinanceOperationState.InProgress
+                FinanceOperationState.Done.name -> FinanceOperationState.Done
                 else -> throw Exception("Unknown state type")
             }
 }

@@ -114,11 +114,10 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             title?.editText?.setText(financeOperation.title)
             amount?.editText?.setText(financeOperation.amount.toString())
 
-            days?.setText(if (BuildConfig.DEBUG)
+            findViewById<TextInputLayout>(R.id.daysInputLayout)?.helperText = if (BuildConfig.DEBUG)
                 (financeOperation.timeFinish - financeOperation.timeStart).millsToSeconds().toString()
             else
                 (financeOperation.timeFinish - financeOperation.timeStart).millsToDays().toString()
-            )
 
             currency?.adapter = CurrencyArrayAdapter(context, Currency.values().toList())
             category?.adapter = CategoryArrayAdapter(context, OperationType.Income.getCategories())
@@ -166,7 +165,9 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                 else
                     days?.text.toString().daysToMillis()
 
-                presenter.addOperationWithAssociatedAccount(financeOperation.copy(
+                accountAdapter
+                presenter.addOperationAndUpdateDelayed(financeOperation.copy(
+                        id = null,
                         date = currentDate,
                         timeStart = time,
                         timeFinish = timeFinish,

@@ -6,13 +6,13 @@ import yandexschool.dmpolyakov.money.R
 
 class OperationTypeConverter {
     @TypeConverter
-    fun fromOperationType(operationType: OperationType): Int = operationType.type
+    fun fromOperationType(operationType: OperationType): String = operationType.name
 
     @TypeConverter
-    fun toOperationType(data: Int): OperationType =
+    fun toOperationType(data: String): OperationType =
             when (data) {
-                R.string.Income -> OperationType.Income
-                R.string.Expense -> OperationType.Expense
+                OperationType.Income.name -> OperationType.Income
+                OperationType.Expense.name -> OperationType.Expense
                 else -> throw Exception("Unknown operation type")
             }
 }

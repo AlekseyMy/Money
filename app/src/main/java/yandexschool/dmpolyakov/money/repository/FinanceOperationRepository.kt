@@ -10,8 +10,8 @@ interface FinanceOperationRepository {
     fun getFinanceOperations(accountId: Long): Flowable<List<FinanceOperation>>
     fun addFinanceOperationAndUpdateAccount(account: Account, operation: FinanceOperation): Completable
     fun addPeriodicFinanceOperation(operation: FinanceOperation): Completable
-    fun getPeriodicFinanceOperations(timeNow: Long, state: Int): Flowable<List<FinanceOperation>>
+    fun getPeriodicFinanceOperations(timeNow: Long, state: String): Flowable<List<FinanceOperation>>
     fun getFinanceOperationsByIdAndInState(accountId: Long,
-                                           state: Int = FinanceOperationState.Done.code): Flowable<List<FinanceOperation>>
+                                           state: String = FinanceOperationState.Done.name): Flowable<List<FinanceOperation>>
     fun updateFinanceOperation(financeOperation: FinanceOperation): Completable
 }

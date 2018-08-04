@@ -91,10 +91,10 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
 
             val days = findViewById<EditText>(R.id.inputDays)
 
-            if (BuildConfig.DEBUG) {
-                days?.hint = resources.getString(R.string.debug_repeat_across)
+            findViewById<TextInputLayout>(R.id.daysInputLayout)?.helperText = if (BuildConfig.DEBUG) {
+                resources.getString(R.string.debug_repeat_across)
             } else {
-                days?.hint = resources.getString(R.string.repeat_across)
+                resources.getString(R.string.repeat_across)
             }
 
             currency?.adapter = CurrencyArrayAdapter(context, Currency.values().toList())

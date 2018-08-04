@@ -21,17 +21,15 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
     override fun addFinanceOperationAndUpdateAccount(account: Account,
                                                      operation: FinanceOperation): Completable {
         operation.accountKey = account.id()!!
+        if (operation.type == OperationType.Expense)
+            operation.amount = operation.amount.multiply(BigDecimal("-1"))
         return Completable.fromAction {
             db.accountFinanceOperationDao
                     .insertFinanceOperationAndUpdateAccount(operation,
                             account.id()!!, when(account.currency) {
                         Currency.Rubble -> operation.amount.toRubbles(operation.currency)
                         Currency.Dollar -> operation.amount.toDollars(operation.currency)
-                    }.multiply(
-                            if (operation.type == OperationType.Income)
-                                BigDecimal("1")
-                            else
-                                BigDecimal("-1")))
+                    })
         }.subscribeOn(Schedulers.io())
     }
 
@@ -39,11 +37,11 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
             db.financeOperationDao.insert(operation)
         }.subscribeOn(Schedulers.io())
 
-    override fun getPeriodicFinanceOperations(timeNow: Long, state: Int): Flowable<List<FinanceOperation>> =
+    override fun getPeriodicFinanceOperations(timeNow: Long, state: String): Flowable<List<FinanceOperation>> =
             db.financeOperationDao.getPeriodicFinanceOperations(timeNow, state)
 
     override fun getFinanceOperationsByIdAndInState(accountId: Long,
-                                                    state: Int): Flowable<List<FinanceOperation>> =
+                                                    state: String): Flowable<List<FinanceOperation>> =
             db.financeOperationDao.getFinanceOperationsByIdAndInState(accountId, state)
 
     override fun updateFinanceOperation(financeOperation: FinanceOperation): Completable =

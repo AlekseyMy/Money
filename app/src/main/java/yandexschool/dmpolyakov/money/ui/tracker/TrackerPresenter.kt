@@ -20,6 +20,8 @@ class TrackerPresenter @Inject constructor(
 
     private val periodicFinanceOperations: Queue<FinanceOperation> = ArrayDeque<FinanceOperation>()
 
+    lateinit var accounts: List<Account>
+
     override fun getScreenTag(): String {
         return "TrackerPresenter"
     }
@@ -32,14 +34,15 @@ class TrackerPresenter @Inject constructor(
 
     fun showNext() {
         if (!periodicFinanceOperations.isEmpty()) {
-            viewState.showFinanceOperationDialog(periodicFinanceOperations.poll())
-        }
+            viewState.showFinanceOperationDialog(periodicFinanceOperations.remove())
+        } else
+            periodicFinanceOperations.clear()
     }
 
     private fun getPeriodicTransactions() {
         bind(onUi(financeOperationRep
                 .getPeriodicFinanceOperations(System.currentTimeMillis(),
-                        FinanceOperationState.InProgress.code))
+                        FinanceOperationState.InProgress.name))
                 .subscribe({
                     periodicFinanceOperations.addAll(it)
                     showNext()
@@ -64,22 +67,14 @@ class TrackerPresenter @Inject constructor(
     private fun updateAccounts() {
         bind(onUi(accountRep.getAccounts()).subscribe({
             viewState.showAccounts(it)
+            accounts = it
         }, {
             viewState.showError(it)
         }))
     }
 
-    fun addOperationWithAssociatedAccount(operation: FinanceOperation) {
-        bind(onUi(accountRep.getAccount(operation.accountKey))
-                .subscribe({
-                    addOperationAndUpdateDelayed(it, operation)
-                }, {
-                    viewState.showError(it)
-                }))
-    }
-
-    private fun addOperationAndUpdateDelayed(account: Account, operation: FinanceOperation) {
-        operation.accountKey = account.id()!!
+    fun addOperationAndUpdateDelayed(operation: FinanceOperation) {
+        val account = accounts.filter { it.id() == operation.accountKey }[0]
         if (operation.state == FinanceOperationState.InProgress) {
             bind(onUi(financeOperationRep.updateFinanceOperation(operation))
                     .subscribe({}, {

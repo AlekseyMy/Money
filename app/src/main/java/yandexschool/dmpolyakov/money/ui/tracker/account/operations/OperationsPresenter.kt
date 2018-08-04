@@ -27,7 +27,7 @@ class OperationsPresenter @Inject constructor(
     fun addOperation(operation: FinanceOperation) {
         if (operation.state == FinanceOperationState.InProgress) {
             operation.accountKey = account.id()!!
-            bind(onUi(financeOperationRep.addPeriodicFinanceOperation(operation))
+            bind(onUi(financeOperationRep.addPeriodicFinanceOperation(operation.copy(id = null)))
                     .subscribe({}, {
                         viewState.showError(it)
                     })

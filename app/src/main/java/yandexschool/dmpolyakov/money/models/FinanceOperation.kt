@@ -25,7 +25,7 @@ import java.math.BigDecimal
         FinanceOperationStateConverter::class)
 data class FinanceOperation(
         val title: String,
-        val amount: BigDecimal,
+        var amount: BigDecimal,
         val type: OperationType,
         val category: OperationCategory,
         val currency: Currency,

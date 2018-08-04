@@ -35,7 +35,7 @@
     <string name="Income">Income</string>
     <string name="Expense">Expense</string>
     <string name="repeat_across">Repeat across n days</string>
-    <string name="debug_repeat_across">Debug!! Repeat across n seconds</string>
+    <string name="debug_repeat_across">Repeat across n seconds</string>
     <string name="canceled">Canceled</string>
     <string name="inProgress">InProgress</string>
     <string name="done">Done</string>

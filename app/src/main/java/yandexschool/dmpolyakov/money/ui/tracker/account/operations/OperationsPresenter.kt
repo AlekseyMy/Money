@@ -1,10 +1,10 @@
 package yandexschool.dmpolyakov.money.ui.tracker.account.operations
 
 import com.arellomobile.mvp.InjectViewState
+import yandexschool.dmpolyakov.money.FinanceOperationState
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
-import yandexschool.dmpolyakov.money.repository.AccountRepository
 import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
 import javax.inject.Inject
@@ -25,17 +25,28 @@ class OperationsPresenter @Inject constructor(
     }
 
     fun addOperation(operation: FinanceOperation) {
-        bind((financeOperationRep.addFinanceOperation(account, operation)
-                .subscribe({
-                    updateOperations()
-                }, {
-                    viewState.showError(it)
-                }))
-        )
+        if (operation.state == FinanceOperationState.InProgress) {
+            operation.accountKey = account.id()!!
+            bind(onUi(financeOperationRep.addPeriodicFinanceOperation(operation))
+                    .subscribe({}, {
+                        viewState.showError(it)
+                    })
+            )
+        }
+
+        bind((financeOperationRep.addFinanceOperationAndUpdateAccount(account,
+                operation.copy(state = FinanceOperationState.Done))
+                    .subscribe({
+                        updateOperations()
+                    }, {
+                        viewState.showError(it)
+                    }))
+            )
     }
 
     private fun updateOperations() {
-        bind(onUi(financeOperationRep.getFinanceOperations(account.id()))
+        bind(onUi(financeOperationRep
+                .getFinanceOperationsByIdAndInState(account.id()!!))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {
@@ -46,7 +57,8 @@ class OperationsPresenter @Inject constructor(
 
     fun loadAccount(account: Account) {
         this.account = account
-        bind(onUi(financeOperationRep.getFinanceOperations(account.id()))
+        bind(onUi(financeOperationRep
+                .getFinanceOperationsByIdAndInState(account.id()!!))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {

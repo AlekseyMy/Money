@@ -26,6 +26,7 @@ import yandexschool.dmpolyakov.money.ui.base.rv_delegates.OperationsDelegateAdap
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.EmptyStateViewModel
 import yandexschool.dmpolyakov.money.ui.tracker.CurrencyArrayAdapter
 import yandexschool.dmpolyakov.money.utils.daysToMillis
+import yandexschool.dmpolyakov.money.utils.secondsToMills
 import yandexschool.dmpolyakov.money.utils.timeNow
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
@@ -90,6 +91,12 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
 
             val days = findViewById<EditText>(R.id.inputDays)
 
+            if (BuildConfig.DEBUG) {
+                days?.hint = resources.getString(R.string.debug_repeat_across)
+            } else {
+                days?.hint = resources.getString(R.string.repeat_across)
+            }
+
             currency?.adapter = CurrencyArrayAdapter(context, Currency.values().toList())
             category?.adapter = CategoryArrayAdapter(context, OperationType.Income.getCategories())
 
@@ -128,6 +135,11 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                 }
 
                 val time = timeNow()
+                val timeFinish = time + if (BuildConfig.DEBUG)
+                    days?.text.toString().secondsToMills()
+                else
+                    days?.text.toString().daysToMillis()
+
                 presenter.addOperation(
                         FinanceOperation(
                                 title = title?.editText?.text.toString(),
@@ -136,11 +148,13 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                                 type = operationType,
                                 category = category?.selectedItem as OperationCategory,
                                 date = currentDate,
-                                accountKey = 0L,
-                                id = 0L,
                                 timeStart = time,
-                                timeFinish = time + days?.text.toString().daysToMillis(),
-                                state = TransactionState.Done
+                                timeFinish = timeFinish,
+                                accountKey = 0,
+                                state = if (timeFinish > time)
+                                    FinanceOperationState.InProgress
+                                else
+                                    FinanceOperationState.Done
                         )
                 )
 

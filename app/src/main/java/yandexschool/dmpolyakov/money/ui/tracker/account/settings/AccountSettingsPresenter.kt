@@ -19,7 +19,7 @@ class AccountSettingsPresenter @Inject constructor(
     private lateinit var account: Account
 
     fun rename(title: String) {
-        bind((accountRep.renameAccount(account.id(), title)
+        bind((accountRep.renameAccount(account.id()!!, title)
                 .subscribe({
                 }, {
                     viewState.showError(it)

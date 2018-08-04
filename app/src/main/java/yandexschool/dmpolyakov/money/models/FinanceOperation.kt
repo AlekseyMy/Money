@@ -22,7 +22,7 @@ import java.math.BigDecimal
         CurrencyConverter::class,
         OperationTypeConverter::class,
         OperationCategoryConverter::class,
-        TransactionStateConverter::class)
+        FinanceOperationStateConverter::class)
 data class FinanceOperation(
         val title: String,
         val amount: BigDecimal,
@@ -32,9 +32,9 @@ data class FinanceOperation(
         val date: String,
         val timeStart: Long,
         val timeFinish: Long,
-        val state: TransactionState,
+        var state: FinanceOperationState,
         @ColumnInfo(name = "account_id") var accountKey: Long,
-        @PrimaryKey(autoGenerate = true) private val id: Long
+        @PrimaryKey(autoGenerate = true) private val id: Long? = null
 
 ) : Parcelable, IComparableItem {
 

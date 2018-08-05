@@ -58,7 +58,7 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
     }
 
     override fun showTitle(title: String) {
-        this.title.text = title
+        this.titlePeriodic.text = title
     }
 
     override fun showBalance(balance: String) {

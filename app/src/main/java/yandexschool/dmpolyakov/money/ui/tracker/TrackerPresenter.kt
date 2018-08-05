@@ -35,8 +35,9 @@ class TrackerPresenter @Inject constructor(
     fun showNext() {
         if (!periodicFinanceOperations.isEmpty()) {
             viewState.showFinanceOperationDialog(periodicFinanceOperations.remove())
-        } else
-            viewState.hideFinanceOperationDialog()
+        } else {
+            onCancelFinanceOperationDialog()
+        }
     }
 
     private fun getPeriodicTransactions() {
@@ -53,7 +54,7 @@ class TrackerPresenter @Inject constructor(
     }
 
     fun addAccount(account: Account) {
-        bind(accountRep.addAccount(account).subscribe({
+        bind(onUi(accountRep.addAccount(account)).subscribe({
             updateAccounts()
         }, {
             viewState.showError(it)

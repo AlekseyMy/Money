@@ -19,6 +19,9 @@ interface FinanceOperationDao {
     @Query("SELECT * FROM financeoperation  WHERE account_id = :accountId")
     fun getByAccountId(accountId: Long): Flowable<List<FinanceOperation>>
 
+    @Query("SELECT * FROM financeoperation WHERE (state == :state AND timeFinish < :timeNow AND account_id == :accountId)")
+    fun getPeriodicFinanceOperationsById(accountId: Long, timeNow: Long, state: String): Flowable<List<FinanceOperation>>
+
     @Query("SELECT * FROM financeoperation WHERE (state == :state AND timeFinish < :timeNow)")
     fun getPeriodicFinanceOperations(timeNow: Long, state: String): Flowable<List<FinanceOperation>>
 

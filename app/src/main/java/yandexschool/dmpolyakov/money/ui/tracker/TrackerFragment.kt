@@ -96,8 +96,8 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
         with(addOldOperationDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.title)
-            val amount = findViewById<TextInputLayout>(R.id.amount)
+            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
+            val amount = findViewById<TextInputLayout>(R.id.amountPeriodic)
             val type = findViewById<RadioGroup>(R.id.type)
 
             val currency = findViewById<Spinner>(R.id.spinnerCurrency)
@@ -216,7 +216,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
         with(addNewAccountDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.title)
+            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
             val amountInput = findViewById<EditText>(R.id.inputAmount)
 
             val currency = findViewById<Spinner>(R.id.spinnerCurrency)

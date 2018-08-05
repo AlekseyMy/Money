@@ -13,7 +13,7 @@ class AccountDelegateAdapter(private val onAccount: (Account) -> Unit) : KDelega
     override fun isForViewType(items: MutableList<*>, position: Int) = items[position] is Account
 
     override fun onBind(item: Account, viewHolder: KViewHolder) = with(viewHolder) {
-        title.text = item.title
+        titlePeriodic.text = item.title
         balance.text = item.balance
 
         viewHolder.itemView.setOnClickListener {

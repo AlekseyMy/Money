@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/datePeriodic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -18,33 +18,33 @@
         tools:text="23.07.2018 11:47" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/titlePeriodic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="4dp"
         android:textColor="@color/black"
         android:textSize="17sp"
-        app:layout_constraintEnd_toStartOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="@id/date"
-        app:layout_constraintTop_toBottomOf="@id/date"
+        app:layout_constraintEnd_toStartOf="@id/deleteImageView"
+        app:layout_constraintStart_toStartOf="@id/datePeriodic"
+        app:layout_constraintTop_toBottomOf="@id/datePeriodic"
         tools:text="ESB Payment to Card RUS ESB PAyment to Card RUS 2" />
 
     <TextView
-        android:id="@+id/amount"
+        android:id="@+id/amountPeriodic"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="4dp"
         android:textColor="@color/saturated_green"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@id/icon"
-        app:layout_constraintStart_toStartOf="@id/date"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintEnd_toStartOf="@id/iconPeriodic"
+        app:layout_constraintStart_toStartOf="@id/datePeriodic"
+        app:layout_constraintTop_toBottomOf="@id/titlePeriodic"
         tools:text="2 376,00 P" />
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/iconPeriodic"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginBottom="12dp"
@@ -61,14 +61,14 @@
         android:background="@color/silver_82"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amount" />
+        app:layout_constraintTop_toBottomOf="@id/amountPeriodic" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/deleteImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_delete" />

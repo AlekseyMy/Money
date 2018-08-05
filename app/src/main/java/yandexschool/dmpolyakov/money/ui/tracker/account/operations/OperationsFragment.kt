@@ -82,8 +82,8 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
         with(addNewOperationDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.title)
-            val amount = findViewById<TextInputLayout>(R.id.amount)
+            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
+            val amount = findViewById<TextInputLayout>(R.id.amountPeriodic)
             val type = findViewById<RadioGroup>(R.id.type)
 
             val currency = findViewById<Spinner>(R.id.spinnerCurrency)

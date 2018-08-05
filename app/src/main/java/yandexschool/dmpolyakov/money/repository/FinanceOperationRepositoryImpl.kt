@@ -37,7 +37,13 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
             db.financeOperationDao.insert(operation)
         }.subscribeOn(Schedulers.io())
 
-    override fun getPeriodicFinanceOperations(timeNow: Long, state: String): Flowable<List<FinanceOperation>> =
+    override fun getPeriodicFinanceOperationsById(accountId: Long,
+                                                  timeNow: Long,
+                                                  state: String): Flowable<List<FinanceOperation>> =
+            db.financeOperationDao.getPeriodicFinanceOperationsById(accountId, timeNow, state)
+
+    override fun getPeriodicFinanceOperations(timeNow: Long,
+                                              state: String): Flowable<List<FinanceOperation>> =
             db.financeOperationDao.getPeriodicFinanceOperations(timeNow, state)
 
     override fun getFinanceOperationsByIdAndInState(accountId: Long,

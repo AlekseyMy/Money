@@ -35,7 +35,9 @@ class PeriodicOperationsFragment: BaseMvpFragment<PeriodicOperationsPresenter>()
     override fun providePresenter(): PeriodicOperationsPresenter = presenter
 
     private val periodicOperationsAdapter = DiffUtilCompositeAdapter.Builder()
-            .add(PeriodicOperationsDelegateAdapter())
+            .add(PeriodicOperationsDelegateAdapter {
+                presenter.onDeleteClick(it)
+            })
             .add(EmptyStateDelegateAdapter())
             .build()
 

@@ -18,7 +18,7 @@ class AccountPresenter @Inject constructor(
     private var accountId = 0L
 
     override fun onFirstViewAttach() {
-        initAccount(accountId)
+        viewState.loadAccountId()
     }
 
     fun initAccount(id: Long) {

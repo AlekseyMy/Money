@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.repository.AccountRepository
+import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.tracker.TrackerPresenter
 
 
@@ -12,7 +13,9 @@ object TrackerModule {
 
     @JvmStatic
     @Provides
-    fun provideTrackerPresenter(router: MainRouter, accountRepository: AccountRepository): TrackerPresenter =
-            TrackerPresenter(router, accountRepository)
+    fun provideTrackerPresenter(router: MainRouter,
+                                accountRepository: AccountRepository,
+                                financeOperationRep: FinanceOperationRepository): TrackerPresenter =
+            TrackerPresenter(router, accountRepository, financeOperationRep)
     
 }

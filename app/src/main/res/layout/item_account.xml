@@ -21,7 +21,7 @@
         android:paddingBottom="8dp">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titlePeriodic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"

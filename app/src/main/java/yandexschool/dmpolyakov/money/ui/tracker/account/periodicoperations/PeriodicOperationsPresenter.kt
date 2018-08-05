@@ -1,4 +1,4 @@
-package yandexschool.dmpolyakov.money.ui.tracker.account.operations
+package yandexschool.dmpolyakov.money.ui.tracker.account.periodicoperations
 
 import com.arellomobile.mvp.InjectViewState
 import yandexschool.dmpolyakov.money.FinanceOperationState
@@ -9,34 +9,29 @@ import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
 import javax.inject.Inject
 
-
 @InjectViewState
-class OperationsPresenter @Inject constructor(
+class PeriodicOperationsPresenter @Inject constructor(
         router: MainRouter,
-        private val financeOperationRep: FinanceOperationRepository) : BaseMvpPresenter<OperationsView>(router) {
+        private val financeOperationRep: FinanceOperationRepository): BaseMvpPresenter<PeriodicOperationsView>(router) {
 
-    override fun getScreenTag() = "OperationsPresenter"
+    override fun getScreenTag(): String = "PeriodicOperationsPresenter"
 
-    private lateinit var account: Account
+    lateinit var account: Account
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.loadAccount()
     }
 
-    fun addOperation(operation: FinanceOperation) {
-        bind((financeOperationRep.addFinanceOperationAndUpdateAccount(account, operation)
-                .subscribe({
-                    updateOperations()
-                }, {
-                    viewState.showError(it)
-                }))
-        )
+    override fun attachView(view: PeriodicOperationsView?) {
+        super.attachView(view)
+        updatePeriodicOperations()
     }
 
-    private fun updateOperations() {
+    private fun updatePeriodicOperations() {
         bind(onUi(financeOperationRep
-                .getFinanceOperations(account.id()!!))
+                .getFinanceOperationsByIdAndInState(account.id()!!,
+                        FinanceOperationState.InProgress.name))
                 .subscribe({
                     viewState.showOperations(it ?: listOf())
                 }, {
@@ -47,14 +42,15 @@ class OperationsPresenter @Inject constructor(
 
     fun loadAccount(account: Account) {
         this.account = account
-        bind(onUi(financeOperationRep
-                .getFinanceOperations(account.id()!!))
-                .subscribe({
-                    viewState.showOperations(it ?: listOf())
-                }, {
-                    viewState.showError(it)
-                })
-        )
+        updatePeriodicOperations()
     }
 
+    fun onDeleteClick(financeOperation: FinanceOperation) {
+        financeOperation.state = FinanceOperationState.Canceled
+        bind(onUi(financeOperationRep.updateFinanceOperation(financeOperation))
+                .subscribe({
+                }, {
+                    viewState.showError(it)
+                }))
+    }
 }

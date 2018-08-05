@@ -5,14 +5,8 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 import android.os.Parcelable
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.parcel.Parcelize
-import yandexschool.dmpolyakov.money.Currency
-import yandexschool.dmpolyakov.money.DOLLAR_TO_RUBBLE
-import yandexschool.dmpolyakov.money.OperationCategory
-import yandexschool.dmpolyakov.money.OperationType
-import yandexschool.dmpolyakov.money.models.converters.AmountConverter
-import yandexschool.dmpolyakov.money.models.converters.CurrencyConverter
-import yandexschool.dmpolyakov.money.models.converters.OperationCategoryConverter
-import yandexschool.dmpolyakov.money.models.converters.OperationTypeConverter
+import yandexschool.dmpolyakov.money.*
+import yandexschool.dmpolyakov.money.models.converters.*
 import java.math.BigDecimal
 
 @Parcelize
@@ -27,16 +21,20 @@ import java.math.BigDecimal
 @TypeConverters(AmountConverter::class,
         CurrencyConverter::class,
         OperationTypeConverter::class,
-        OperationCategoryConverter::class)
+        OperationCategoryConverter::class,
+        FinanceOperationStateConverter::class)
 data class FinanceOperation(
         val title: String,
-        val amount: BigDecimal,
+        var amount: BigDecimal,
         val type: OperationType,
         val category: OperationCategory,
         val currency: Currency,
         val date: String,
+        val timeStart: Long,
+        val timeFinish: Long,
+        var state: FinanceOperationState,
         @ColumnInfo(name = "account_id") var accountKey: Long,
-        @PrimaryKey(autoGenerate = true) private val id: Long
+        @PrimaryKey(autoGenerate = true) private val id: Long? = null
 
 ) : Parcelable, IComparableItem {
 

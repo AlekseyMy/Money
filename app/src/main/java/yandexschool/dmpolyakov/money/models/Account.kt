@@ -19,7 +19,7 @@ data class Account(
         var title: String,
         var amount: BigDecimal,
         val currency: Currency,
-        @PrimaryKey(autoGenerate = true) private val id: Long
+        @PrimaryKey(autoGenerate = true) private val id: Long? = null
 ) : Parcelable, IComparableItem {
 
     val balance

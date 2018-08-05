@@ -10,7 +10,7 @@
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
     <string name="open_new_account">Creating of a new account</string>
-    <string name="title">Название</string>
+    <string name="title">Name</string>
     <string name="initial_amount">Initial amount</string>
     <string name="currency">Currency</string>
     <string name="error_empty_title">Enter the title</string>
@@ -31,7 +31,15 @@
     <string name="category_education">Education</string>
     <string name="rename">Rename</string>
     <string name="ok">OK</string>
-    <string name="finance_history">Operations history</string>
+    <string name="finance_history">Operations</string>
     <string name="Income">Income</string>
     <string name="Expense">Expense</string>
+    <string name="repeat_across">Repeat across n days</string>
+    <string name="debug_repeat_across">Repeat across n seconds</string>
+    <string name="canceled">Canceled</string>
+    <string name="inProgress">InProgress</string>
+    <string name="done">Done</string>
+    <string name="periodicOperations">Periodic</string>
+    <string name="empty_periodic_operations_list">No periodic operations</string>
+    <style name="delete">Delete</style>
 </resources>

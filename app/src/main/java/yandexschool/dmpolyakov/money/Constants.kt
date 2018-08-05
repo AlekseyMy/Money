@@ -29,3 +29,9 @@ enum class OperationType(var type: Int) { Income(R.string.Income), Expense(R.str
         }
     }
 }
+
+enum class FinanceOperationState(val code: Int) {
+    Canceled(R.string.canceled),
+    InProgress(R.string.inProgress),
+    Done(R.string.done)
+}

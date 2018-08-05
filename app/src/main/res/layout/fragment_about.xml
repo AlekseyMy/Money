@@ -10,14 +10,14 @@
         android:layout_width="0dp"
         android:layout_height="220dp"
         android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@id/title"
+        app:layout_constraintBottom_toTopOf="@id/titlePeriodic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/titlePeriodic"
         style="@style/TextLabelMedium"
         android:layout_marginTop="42dp"
         app:layout_constraintBottom_toBottomOf="parent"

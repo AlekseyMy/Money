@@ -114,7 +114,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             title?.editText?.setText(financeOperation.title)
             amount?.editText?.setText(financeOperation.amount.toString())
 
-            findViewById<TextInputLayout>(R.id.daysInputLayout)?.helperText = if (BuildConfig.DEBUG)
+            days?.hint = if (BuildConfig.DEBUG)
                 (financeOperation.timeFinish - financeOperation.timeStart).millsToSeconds().toString()
             else
                 (financeOperation.timeFinish - financeOperation.timeStart).millsToDays().toString()

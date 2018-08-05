@@ -39,4 +39,6 @@
     <string name="canceled">Canceled</string>
     <string name="inProgress">InProgress</string>
     <string name="done">Done</string>
+    <string name="periodicOperations">Periodic operations</string>
+
 </resources>

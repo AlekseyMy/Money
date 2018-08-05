@@ -40,5 +40,6 @@
     <string name="canceled">Отменена</string>
     <string name="inProgress">Осуществляется</string>
     <string name="done">Выполнена</string>
+    <string name="periodicOperations">Периодические операции</string>
 
 </resources>

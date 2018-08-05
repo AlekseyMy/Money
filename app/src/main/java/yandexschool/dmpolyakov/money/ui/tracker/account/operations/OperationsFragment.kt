@@ -91,7 +91,7 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
 
             val days = findViewById<EditText>(R.id.inputDays)
 
-            findViewById<TextInputLayout>(R.id.daysInputLayout)?.helperText = if (BuildConfig.DEBUG) {
+            days?.hint = if (BuildConfig.DEBUG) {
                 resources.getString(R.string.debug_repeat_across)
             } else {
                 resources.getString(R.string.repeat_across)

@@ -13,6 +13,7 @@ import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.ui.base.ViewPagerAdapter
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.operations.OperationsFragment
+import yandexschool.dmpolyakov.money.ui.tracker.account.periodicoperations.PeriodicOperationsFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.settings.AccountSettingsFragment
 import javax.inject.Inject
 
@@ -74,7 +75,13 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         bundle.putParcelable("account", account)
         accountSettingsFragment.arguments = bundle
 
+        val periodicOperationFragment = PeriodicOperationsFragment()
+        val bundlePO = Bundle()
+        bundlePO.putParcelable("account", account)
+        periodicOperationFragment.arguments = bundlePO
+
         val adapter = ViewPagerAdapter(childFragmentManager)
+        adapter.addFragment(periodicOperationFragment, getString(R.string.periodicOperations))
         adapter.addFragment(fragmentOperations, getString(R.string.finance_history))
         adapter.addFragment(accountSettingsFragment, getString(R.string.settings))
         viewPager.adapter = adapter

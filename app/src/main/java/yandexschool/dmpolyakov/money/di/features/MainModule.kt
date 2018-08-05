@@ -11,6 +11,7 @@ import yandexschool.dmpolyakov.money.ui.settings.SettingsFragment
 import yandexschool.dmpolyakov.money.ui.tracker.TrackerFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.AccountFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.operations.OperationsFragment
+import yandexschool.dmpolyakov.money.ui.tracker.account.periodicoperations.PeriodicOperationsFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.settings.AccountSettingsFragment
 
 
@@ -34,6 +35,9 @@ abstract class MainModule {
 
     @ContributesAndroidInjector(modules = [AccountModule::class])
     abstract fun contributeAccountSettingsFragment(): AccountSettingsFragment
+
+    @ContributesAndroidInjector(modules = [AccountModule::class])
+    abstract fun contributePeriodicOperationsFragment(): PeriodicOperationsFragment
 
     @Module
     companion object {

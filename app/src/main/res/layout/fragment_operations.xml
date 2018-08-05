@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTracker"
+        android:id="@+id/rvOperations"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"
@@ -19,7 +19,7 @@
         tools:listitem="@layout/item_operation" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addOperation"
+        android:id="@+id/fabAddOperation"
         style="@style/FloatingActionButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

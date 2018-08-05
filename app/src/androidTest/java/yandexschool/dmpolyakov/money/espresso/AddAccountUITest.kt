@@ -1,5 +1,6 @@
 package yandexschool.dmpolyakov.money.espresso
 
+import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.typeText
@@ -12,20 +13,29 @@ import android.support.test.runner.AndroidJUnit4
 import com.example.delegateadapter.delegate.KDelegateAdapter
 import kotlinx.android.synthetic.main.fragment_tracker.*
 import org.hamcrest.Matchers.*
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import yandexschool.dmpolyakov.money.R
-import yandexschool.dmpolyakov.money.navigation.Screens
 import yandexschool.dmpolyakov.money.ui.MainActivity
 import yandexschool.dmpolyakov.money.ui.tracker.TrackerFragment
 
 
 @RunWith(AndroidJUnit4::class)
-class AddAccountUiTest {
+class AddAccountUITest {
 
     @get:Rule
     val activityTestRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+
+    companion object {
+
+        @JvmStatic
+        @BeforeClass
+        fun beforeClass() {
+            InstrumentationRegistry.getTargetContext().deleteDatabase("Money")
+        }
+    }
 
     @Test
     fun testFragment() {
@@ -39,9 +49,9 @@ class AddAccountUiTest {
 
         val position = (activityTestRule.activity.supportFragmentManager
                 .fragments.last() as TrackerFragment)
-                .rvTracker.adapter?.itemCount!! - 1
+                .rvOperations.adapter?.itemCount!! - 1
 
-        onView(allOf(withId(R.id.rvTracker), isDisplayed()))
+        onView(allOf(withId(R.id.rvOperations), isDisplayed()))
                 .perform(RecyclerViewActions.scrollToPosition<KDelegateAdapter.KViewHolder>(position))
 
         onView(withText("testAccount")).check(matches(isDisplayed()))

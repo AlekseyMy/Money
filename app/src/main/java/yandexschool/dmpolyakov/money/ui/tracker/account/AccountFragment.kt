@@ -87,6 +87,8 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         adapter.addFragment(fragmentOperations, getString(R.string.finance_history))
         adapter.addFragment(accountSettingsFragment, getString(R.string.settings))
         viewPager.adapter = adapter
+        tabs.getTabAt(1)?.select()
+
     }
 
     override fun getLogName() = "AccountFragment"

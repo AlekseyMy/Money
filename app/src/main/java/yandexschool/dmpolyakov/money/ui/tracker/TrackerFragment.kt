@@ -74,8 +74,8 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvTracker.layoutManager = LinearLayoutManager(context)
-        rvTracker.adapter = accountAdapter
+        rvOperations.layoutManager = LinearLayoutManager(context)
+        rvOperations.adapter = accountAdapter
 
         fabAddAccount.setOnClickListener {
             showDialog()

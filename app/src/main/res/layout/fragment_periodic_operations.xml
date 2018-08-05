@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_periodic"
+        android:id="@+id/rvPeriodic"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"

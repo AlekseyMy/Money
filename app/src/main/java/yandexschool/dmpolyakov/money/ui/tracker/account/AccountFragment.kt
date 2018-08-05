@@ -51,7 +51,9 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         icBack.setOnClickListener {
             router.back()
         }
+    }
 
+    override fun loadAccountId() {
         presenter.initAccount(arguments!!.getLong(EXTRA_ACCOUNT_ID, 0L))
     }
 

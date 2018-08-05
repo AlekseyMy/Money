@@ -18,14 +18,14 @@ class MainPresenter @Inject constructor(var router: MainRouter,
     }
 
     private fun updateExchangeRates() {
-        currencyRep.getRatio("USD", "RUB").subscribe(
+        bind(onUi(currencyRep.getRatio("USD", "RUB")).subscribe(
                 {
                     DOLLAR_TO_RUBBLE = it
                 },
                 {
                     viewState.showError(it)
                 }
-        )
+        ))
     }
 
 

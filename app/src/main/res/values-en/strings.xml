@@ -40,5 +40,6 @@
     <string name="inProgress">InProgress</string>
     <string name="done">Done</string>
     <string name="periodicOperations">Periodic operations</string>
+    <string name="empty_periodic_operations_list">No periodic operations</string>
 
 </resources>

@@ -9,7 +9,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.delegateadapter.delegate.diff.DiffUtilCompositeAdapter
 import com.example.delegateadapter.delegate.diff.IComparableItem
-import kotlinx.android.synthetic.main.fragment_operations.*
 import kotlinx.android.synthetic.main.fragment_periodic_operations.*
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.Account
@@ -41,13 +40,13 @@ class PeriodicOperationsFragment: BaseMvpFragment<PeriodicOperationsPresenter>()
             .build()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_operations, container, false)
+            inflater.inflate(R.layout.fragment_periodic_operations, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv_periodic.layoutManager = LinearLayoutManager(context)
-        rv_periodic.adapter = periodicOperationsAdapter
+        rvPeriodic.layoutManager = LinearLayoutManager(context)
+        rvPeriodic.adapter = periodicOperationsAdapter
     }
 
     override fun loadAccount() {
@@ -58,9 +57,9 @@ class PeriodicOperationsFragment: BaseMvpFragment<PeriodicOperationsPresenter>()
     override fun showOperations(operations: List<FinanceOperation>) {
         val data = ArrayList<IComparableItem>()
         data.addAll(operations.reversed())
-        data.add(EmptyStateViewModel(getString(R.string.empty_operations_list)))
+        data.add(EmptyStateViewModel(getString(R.string.empty_periodic_operations_list)))
         periodicOperationsAdapter.swapData(data)
-        rv.scrollToPosition(0)
+        rvPeriodic.scrollToPosition(0)
     }
 
     override fun getLogName(): String = "PeriodicOperationsFragment"

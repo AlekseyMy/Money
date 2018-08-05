@@ -136,7 +136,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             }
 
             findViewById<View>(R.id.cancel)?.setOnClickListener {
-                dismiss()
+                hideFinanceOperationDialog()
             }
 
             findViewById<View>(R.id.add)?.setOnClickListener {
@@ -204,6 +204,14 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
         }
     }
 
+    override fun hideFinanceOperationDialog() {
+        addOldOperationDialog.apply {
+            if (isShowing) {
+                dismiss()
+            }
+        }
+    }
+
     override fun showDialog() {
         with(addNewAccountDialog) {
             show()
@@ -215,7 +223,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             currency?.adapter = CurrencyArrayAdapter(context, Currency.values().toList())
 
             findViewById<View>(R.id.cancel)?.setOnClickListener {
-                dismiss()
+                presenter.onCancelAddAccountDialog()
             }
 
             findViewById<View>(R.id.create)?.setOnClickListener {
@@ -233,8 +241,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                                 amount = BigDecimal(amount),
                                 currency = currency?.selectedItem as Currency,
                                 id = 0L))
-
-                dismiss()
+                hideAddAccountDialog()
             }
 
             setOnDismissListener {
@@ -244,6 +251,14 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                 amountInput?.setText("")
                 currency?.setSelection(0)
                 title?.requestFocus()
+            }
+        }
+    }
+
+    override fun hideAddAccountDialog() {
+        addNewAccountDialog.apply {
+            if (isShowing) {
+                dismiss()
             }
         }
     }

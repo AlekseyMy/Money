@@ -59,10 +59,10 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = operationsAdapter
+        rvOperations.layoutManager = LinearLayoutManager(context)
+        rvOperations.adapter = operationsAdapter
 
-        addOperation.setOnClickListener {
+        fabAddOperation.setOnClickListener {
             showDialog()
         }
 
@@ -177,7 +177,7 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
         data.addAll(operations.reversed())
         data.add(EmptyStateViewModel(getString(R.string.empty_operations_list)))
         operationsAdapter.swapData(data)
-        rv.scrollToPosition(0)
+        rvOperations.scrollToPosition(0)
     }
 
     override fun getLogName() = "OperationsFragment"

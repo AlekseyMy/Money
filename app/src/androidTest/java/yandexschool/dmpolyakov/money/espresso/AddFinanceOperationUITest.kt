@@ -2,21 +2,16 @@ package yandexschool.dmpolyakov.money.espresso
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.assertion.ViewAssertions
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.example.delegateadapter.delegate.KDelegateAdapter
-import kotlinx.android.synthetic.main.fragment_tracker.*
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.ui.MainActivity
-import yandexschool.dmpolyakov.money.ui.tracker.account.operations.OperationsFragment
 
 @RunWith(AndroidJUnit4::class)
 class AddFinanceOperationUITest {

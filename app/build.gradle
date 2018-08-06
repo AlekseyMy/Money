@@ -13,10 +13,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'FinanceTracker'
-            keyPassword '123456'
-            storeFile file('/Users/dima/Documents/YandexSchoolKeyStore')
-            storePassword '123456'
+            keyAlias 'Money'
+            keyPassword 'wqred341513'
+            storeFile file('C:/workspace/KeyStore')
+            storePassword 'wqred341513'
         }
     }
 
@@ -32,6 +32,14 @@ android {
                 minifyEnabled true
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
+        }
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
         }
     }
 
@@ -75,9 +83,18 @@ android {
         // Recycler View delegates
         implementation "com.github.liverm0r:delegateadapters:v$delegateAdaptersVersion"
 
+        // Room
+        implementation "android.arch.persistence.room:runtime:$roomVersion"
+        implementation "android.arch.persistence.room:rxjava2:$roomVersion"
+        kapt "android.arch.persistence.room:compiler:$roomVersion"
+
+
         testImplementation "junit:junit:$junit"
         androidTestImplementation "com.android.support.test:runner:$test_runner"
         androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core"
+        androidTestImplementation "com.android.support.test:rules:$test_rules"
+        androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_contrib"
+        testImplementation "org.robolectric:robolectric:$robolecric_version"
     }
 
     buildToolsVersion '28.0.1'

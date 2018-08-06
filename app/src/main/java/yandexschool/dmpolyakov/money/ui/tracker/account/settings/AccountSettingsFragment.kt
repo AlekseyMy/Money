@@ -61,7 +61,7 @@ class AccountSettingsFragment : BaseMvpFragment<AccountSettingsPresenter>(), Acc
         with(renameDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.title)
+            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
 
             findViewById<View>(R.id.cancel)?.setOnClickListener {
                 dismiss()

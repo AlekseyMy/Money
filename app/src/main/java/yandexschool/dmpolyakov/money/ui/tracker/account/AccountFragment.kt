@@ -13,6 +13,7 @@ import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.ui.base.ViewPagerAdapter
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.operations.OperationsFragment
+import yandexschool.dmpolyakov.money.ui.tracker.account.periodicoperations.PeriodicOperationsFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.settings.AccountSettingsFragment
 import javax.inject.Inject
 
@@ -22,10 +23,10 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
     companion object {
         private const val EXTRA_ACCOUNT_ID = "account_id"
 
-        fun newInstance(accountId: String): AccountFragment {
+        fun newInstance(accountId: Long): AccountFragment {
             val fragment = AccountFragment()
             fragment.arguments = Bundle(1).apply {
-                putString(EXTRA_ACCOUNT_ID, accountId)
+                putLong(EXTRA_ACCOUNT_ID, accountId)
             }
             return fragment
         }
@@ -50,12 +51,14 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         icBack.setOnClickListener {
             router.back()
         }
+    }
 
-        presenter.initAccount(arguments!!.getString(EXTRA_ACCOUNT_ID, ""))
+    override fun loadAccountId() {
+        presenter.initAccount(arguments!!.getLong(EXTRA_ACCOUNT_ID, 0L))
     }
 
     override fun showTitle(title: String) {
-        this.title.text = title
+        this.titlePeriodic.text = title
     }
 
     override fun showBalance(balance: String) {
@@ -66,17 +69,26 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
         tabs.setupWithViewPager(viewPager)
 
         val fragmentOperations = OperationsFragment()
-        val bundle = Bundle()
+        var bundle = Bundle()
         bundle.putParcelable("account", account)
         fragmentOperations.arguments = bundle
 
         val accountSettingsFragment = AccountSettingsFragment()
+        bundle.putParcelable("account", account)
         accountSettingsFragment.arguments = bundle
 
+        val periodicOperationFragment = PeriodicOperationsFragment()
+        val bundlePO = Bundle()
+        bundlePO.putParcelable("account", account)
+        periodicOperationFragment.arguments = bundlePO
+
         val adapter = ViewPagerAdapter(childFragmentManager)
+        adapter.addFragment(periodicOperationFragment, getString(R.string.periodicOperations))
         adapter.addFragment(fragmentOperations, getString(R.string.finance_history))
         adapter.addFragment(accountSettingsFragment, getString(R.string.settings))
         viewPager.adapter = adapter
+        tabs.getTabAt(1)?.select()
+
     }
 
     override fun getLogName() = "AccountFragment"

@@ -63,7 +63,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             Screens.ABOUT -> AboutFragment.instance
             Screens.ACCOUNT -> {
                 hideBottomNavigationMenu()
-                AccountFragment.newInstance(data.toString())
+                AccountFragment.newInstance(data as Long)
             }
         }
     }

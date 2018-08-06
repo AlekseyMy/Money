@@ -34,7 +34,7 @@ class AboutFragment : BaseMvpFragment<AboutPresenter>(), AboutView {
 
     override fun showVersion(version: String) {
         val s = "${getString(R.string.about_app_title)} v$version"
-        title.text = s
+        titlePeriodic.text = s
     }
 
     override fun getLogName() = "AboutFragment"

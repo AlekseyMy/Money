@@ -4,30 +4,30 @@ import com.arellomobile.mvp.InjectViewState
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.repository.AccountRepository
+import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
+import java.math.BigDecimal
 import javax.inject.Inject
 
 
 @InjectViewState
 class AccountPresenter @Inject constructor(
         val router: MainRouter,
-        val accountRep: AccountRepository) : BaseMvpPresenter<AccountView>(router) {
+        private val accountRep: AccountRepository) : BaseMvpPresenter<AccountView>(router) {
 
-    private var accountId = ""
+    private var accountId = 0L
 
     override fun onFirstViewAttach() {
-        bind(onUi(accountRep.subjectFakeAccounts).subscribe {
-            updateAccount(it.find { it.id == accountId }!!)
-        })
+        viewState.loadAccountId()
     }
 
-    fun initAccount(id: String) {
+    fun initAccount(id: Long) {
         accountId = id
-        bind(onUi(accountRep.getAccount(id)).subscribe(
-                { updateAccount(it) },
-                {
-                    viewState.showError(it)
-                })
+        bind(onUi(accountRep.getAccount(id)).subscribe({
+            updateAccount(it)
+        }, {
+            viewState?.showError(it)
+        })
         )
     }
 

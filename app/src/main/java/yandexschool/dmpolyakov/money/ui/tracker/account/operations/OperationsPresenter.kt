@@ -1,10 +1,11 @@
 package yandexschool.dmpolyakov.money.ui.tracker.account.operations
 
 import com.arellomobile.mvp.InjectViewState
+import yandexschool.dmpolyakov.money.FinanceOperationState
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
-import yandexschool.dmpolyakov.money.repository.AccountRepository
+import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
 import javax.inject.Inject
 
@@ -12,7 +13,7 @@ import javax.inject.Inject
 @InjectViewState
 class OperationsPresenter @Inject constructor(
         router: MainRouter,
-        val accountRep: AccountRepository) : BaseMvpPresenter<OperationsView>(router) {
+        private val financeOperationRep: FinanceOperationRepository) : BaseMvpPresenter<OperationsView>(router) {
 
     override fun getScreenTag() = "OperationsPresenter"
 
@@ -24,29 +25,36 @@ class OperationsPresenter @Inject constructor(
     }
 
     fun addOperation(operation: FinanceOperation) {
-        bind((accountRep.addFinanceOperation(account.id, operation)
+        bind((financeOperationRep.addFinanceOperationAndUpdateAccount(account, operation)
                 .subscribe({
-                    updateAccount()
+                    updateOperations()
                 }, {
                     viewState.showError(it)
                 }))
         )
     }
 
-    private fun updateAccount() {
-        bind(onUi(accountRep.getAccount(account.id)).subscribe(
-                {
-                    viewState.showOperations(it.operations)
-                },
-                {
+    private fun updateOperations() {
+        bind(onUi(financeOperationRep
+                .getFinanceOperations(account.id()!!))
+                .subscribe({
+                    viewState.showOperations(it ?: listOf())
+                }, {
                     viewState.showError(it)
-                }
-        ))
+                })
+        )
     }
 
     fun loadAccount(account: Account) {
         this.account = account
-        viewState.showOperations(account.operations)
+        bind(onUi(financeOperationRep
+                .getFinanceOperations(account.id()!!))
+                .subscribe({
+                    viewState.showOperations(it ?: listOf())
+                }, {
+                    viewState.showError(it)
+                })
+        )
     }
 
 }

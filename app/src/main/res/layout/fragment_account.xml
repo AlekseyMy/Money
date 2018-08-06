@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/titlePeriodic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -50,8 +50,8 @@
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/white"
         android:textSize="28sp"
-        app:layout_constraintStart_toStartOf="@id/title"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="@id/titlePeriodic"
+        app:layout_constraintTop_toBottomOf="@id/titlePeriodic"
         tools:text="19688,00 P" />
 
     <Space

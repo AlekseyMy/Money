@@ -32,6 +32,15 @@
     <string name="category_education">Образование</string>
     <string name="rename">Переименовать</string>
     <string name="ok">Ок</string>
-    <string name="finance_history">История операций</string>
-
+    <string name="finance_history">Операции</string>
+    <string name="Income">Доход</string>
+    <string name="Expense">Расходы</string>
+    <string name="repeat_across">Повторить через n дней</string>
+    <string name="debug_repeat_across">Повторить через n секунд</string>
+    <string name="canceled">Отменена</string>
+    <string name="inProgress">Осуществляется</string>
+    <string name="done">Выполнена</string>
+    <string name="periodicOperations">Периодические</string>
+    <string name="empty_periodic_operations_list">Нет периодических операций</string>
+    <style name="delete">Удалить</style>
 </resources>

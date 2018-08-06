@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -14,10 +15,8 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.delegateadapter.delegate.diff.DiffUtilCompositeAdapter
 import com.example.delegateadapter.delegate.diff.IComparableItem
 import kotlinx.android.synthetic.main.fragment_operations.*
+import yandexschool.dmpolyakov.money.*
 import yandexschool.dmpolyakov.money.Currency
-import yandexschool.dmpolyakov.money.OperationCategory
-import yandexschool.dmpolyakov.money.OperationType
-import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
@@ -26,6 +25,9 @@ import yandexschool.dmpolyakov.money.ui.base.rv_delegates.EmptyStateDelegateAdap
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.OperationsDelegateAdapter
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.EmptyStateViewModel
 import yandexschool.dmpolyakov.money.ui.tracker.CurrencyArrayAdapter
+import yandexschool.dmpolyakov.money.utils.daysToMillis
+import yandexschool.dmpolyakov.money.utils.secondsToMills
+import yandexschool.dmpolyakov.money.utils.timeNow
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
@@ -57,10 +59,10 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv.layoutManager = LinearLayoutManager(context)
-        rv.adapter = operationsAdapter
+        rvOperations.layoutManager = LinearLayoutManager(context)
+        rvOperations.adapter = operationsAdapter
 
-        addOperation.setOnClickListener {
+        fabAddOperation.setOnClickListener {
             showDialog()
         }
 
@@ -72,7 +74,7 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
     }
 
     override fun loadAccount() {
-        val account: Account = arguments?.getParcelable("account")!!
+        val account = arguments?.getParcelable<Account>("account")!!
         presenter.loadAccount(account)
     }
 
@@ -80,12 +82,20 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
         with(addNewOperationDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.title)
-            val amount = findViewById<TextInputLayout>(R.id.amount)
+            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
+            val amount = findViewById<TextInputLayout>(R.id.amountPeriodic)
             val type = findViewById<RadioGroup>(R.id.type)
 
             val currency = findViewById<Spinner>(R.id.spinnerCurrency)
             val category = findViewById<Spinner>(R.id.spinnerCategory)
+
+            val days = findViewById<EditText>(R.id.inputDays)
+
+            days?.hint = if (BuildConfig.DEBUG) {
+                resources.getString(R.string.debug_repeat_across)
+            } else {
+                resources.getString(R.string.repeat_across)
+            }
 
             currency?.adapter = CurrencyArrayAdapter(context, Currency.values().toList())
             category?.adapter = CategoryArrayAdapter(context, OperationType.Income.getCategories())
@@ -124,6 +134,12 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                     else -> throw Exception("Unknown operation type")
                 }
 
+                val time = timeNow()
+                val timeFinish = time + if (BuildConfig.DEBUG)
+                    days?.text.toString().secondsToMills()
+                else
+                    days?.text.toString().daysToMillis()
+
                 presenter.addOperation(
                         FinanceOperation(
                                 title = title?.editText?.text.toString(),
@@ -131,7 +147,14 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                                 amount = BigDecimal(amount?.editText?.text?.toString()),
                                 type = operationType,
                                 category = category?.selectedItem as OperationCategory,
-                                date = currentDate
+                                date = currentDate,
+                                timeStart = time,
+                                timeFinish = timeFinish,
+                                accountKey = 0,
+                                state = if (timeFinish > time)
+                                    FinanceOperationState.InProgress
+                                else
+                                    FinanceOperationState.Done
                         )
                 )
 
@@ -154,7 +177,7 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
         data.addAll(operations.reversed())
         data.add(EmptyStateViewModel(getString(R.string.empty_operations_list)))
         operationsAdapter.swapData(data)
-        rv.scrollToPosition(0)
+        rvOperations.scrollToPosition(0)
     }
 
     override fun getLogName() = "OperationsFragment"

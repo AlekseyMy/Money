@@ -13,10 +13,10 @@ android {
 
     signingConfigs {
         config {
-            keyAlias 'FinanceTracker'
-            keyPassword '123456'
-            storeFile file('/Users/dima/Documents/YandexSchoolKeyStore')
-            storePassword '123456'
+            keyAlias 'Money'
+            keyPassword 'wqred341513'
+            storeFile file('C:/workspace/KeyStore')
+            storePassword 'wqred341513'
         }
     }
 

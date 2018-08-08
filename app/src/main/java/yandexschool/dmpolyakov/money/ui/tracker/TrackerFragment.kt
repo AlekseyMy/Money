@@ -2,6 +2,7 @@ package yandexschool.dmpolyakov.money.ui.tracker
 
 import android.os.Bundle
 import android.support.design.widget.TextInputLayout
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -27,6 +28,7 @@ import yandexschool.dmpolyakov.money.ui.base.rv_delegates.EmptyStateDelegateAdap
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.SubtitleDelegateAdapter
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.EmptyStateViewModel
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.SubtitleViewModel
+import yandexschool.dmpolyakov.money.ui.tracker.account.AccountFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.operations.CategoryArrayAdapter
 import yandexschool.dmpolyakov.money.utils.*
 import java.math.BigDecimal
@@ -54,14 +56,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
     }
 
     private lateinit var addNewAccountDialog: AlertDialog
-
-    private val accountAdapter = DiffUtilCompositeAdapter.Builder()
-            .add(AccountDelegateAdapter {
-                presenter.onAccountClick(it)
-            })
-            .add(EmptyStateDelegateAdapter())
-            .add(SubtitleDelegateAdapter())
-            .build()
+    private lateinit var accountAdapter: DiffUtilCompositeAdapter
 
     override fun onResume() {
         super.onResume()
@@ -74,6 +69,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        accountAdapter = initAccountAdapter()
         rvOperations.layoutManager = LinearLayoutManager(context)
         rvOperations.adapter = accountAdapter
 
@@ -90,6 +86,32 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                 .setView(R.layout.dialog_add_new_operation)
                 .setCancelable(false)
                 .create()
+    }
+
+    private fun initAccountAdapter() = DiffUtilCompositeAdapter.Builder()
+            .add(AccountDelegateAdapter {
+                if (item_detail_container == null) {
+                    presenter.onAccountClick(it)
+                } else {
+                    showAccountFragment(it)
+                }
+            })
+            .add(EmptyStateDelegateAdapter())
+            .add(SubtitleDelegateAdapter())
+            .build()
+
+    fun showAccountFragment(account: Account) {
+        val transaction = fragmentManager?.beginTransaction()
+        if (transaction != null) {
+            val fragment = AccountFragment()
+            val bundle = Bundle()
+            bundle.putLong("account_id", account.id()!!)
+            fragment.arguments = bundle
+            transaction.replace(R.id.item_detail_container, fragment)
+                    .commit()
+        } else {
+            showToast("transaction doesn't exist")
+        }
     }
 
     override fun showFinanceOperationDialog(financeOperation: FinanceOperation) {

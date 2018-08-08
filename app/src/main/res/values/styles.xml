@@ -21,6 +21,10 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <!--<style name="TabLayout" parent="Base.Widget.Design">-->
+        <!--<item name="android:background">@color/colorAccent</item>-->
+    <!--</style>-->
+
     <style name="RadioButton">
         <item name="colorControlNormal">@color/smoky_white</item>
     </style>

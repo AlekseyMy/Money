@@ -73,8 +73,14 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
         rvOperations.layoutManager = LinearLayoutManager(context)
         rvOperations.adapter = accountAdapter
 
-        fabAddAccount.setOnClickListener {
-            showDialog()
+        if (item_detail_container == null) {
+            fabAddAccount.setOnClickListener {
+                showDialog()
+            }
+        } else {
+            btAddAccount.setOnClickListener {
+                showDialog()
+            }
         }
 
         addNewAccountDialog = AlertDialog.Builder(view.context)

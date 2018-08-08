@@ -13,6 +13,11 @@
         <item name="cardViewStyle">@style/CardView</item>
         <item name="bottomNavigationStyle">@style/bottomNavigationStyle
         </item>
+        <item name="buttonStyle">@style/MyBt</item>
+    </style>
+
+    <style name="MyBt" parent="Widget.AppCompat.Button">
+        <item name="android:color">@color/colorAccent</item>
     </style>
 
     <style name="bottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">

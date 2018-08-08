@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,23 +8,37 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvOperations"
-        android:layout_height="match_parent"
         android:layout_width="@dimen/item_width"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btAddAccount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"
         tools:listitem="@layout/item_account" />
 
+    <Button
+        android:id="@+id/btAddAccount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/item_detail_container"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <FrameLayout
         android:id="@+id/item_detail_container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_green_light">
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rvOperations" />
 
-    </FrameLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAddAccount"
-        style="@style/FloatingActionButton"
-        android:layout_margin="@dimen/fab_margin"/>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_account.*
+import kotlinx.android.synthetic.main.fragment_tracker.*
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.navigation.MainRouter

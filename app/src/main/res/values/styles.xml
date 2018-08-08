@@ -11,9 +11,24 @@
         <item name="windowNoTitle">true</item>
 
         <item name="cardViewStyle">@style/CardView</item>
-        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView
+        <item name="bottomNavigationStyle">@style/bottomNavigationStyle
         </item>
+        <item name="buttonStyle">@style/MyBt</item>
     </style>
+
+    <style name="MyBt" parent="Widget.AppCompat.Button">
+        <item name="android:color">@color/colorAccent</item>
+    </style>
+
+    <style name="bottomNavigationStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="itemIconTint">@color/black</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--<style name="TabLayout" parent="Base.Widget.Design">-->
+        <!--<item name="android:background">@color/colorAccent</item>-->
+    <!--</style>-->
 
     <style name="RadioButton">
         <item name="colorControlNormal">@color/smoky_white</item>
@@ -62,7 +77,7 @@
     </style>
 
     <style name="ThemeTextInputLayout">
-        <item name="colorAccent">@color/cobalt_blue</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="TextInputLayout">

@@ -20,7 +20,7 @@ class TrackerPresenter @Inject constructor(
 
     private val periodicFinanceOperations: Queue<FinanceOperation> = ArrayDeque<FinanceOperation>()
 
-    lateinit var accounts: List<Account>
+    private lateinit var accounts: List<Account>
 
     override fun getScreenTag(): String {
         return "TrackerPresenter"
@@ -94,7 +94,7 @@ class TrackerPresenter @Inject constructor(
                 }))
     }
 
-    fun onCancelFinanceOperationDialog() {
+    private fun onCancelFinanceOperationDialog() {
         viewState.hideFinanceOperationDialog()
     }
 

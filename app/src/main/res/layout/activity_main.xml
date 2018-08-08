@@ -16,12 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--TODO Удалить-->
-        <include
-            layout="@layout/fragment_tracker"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView

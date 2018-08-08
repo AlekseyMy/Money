@@ -43,4 +43,8 @@ class MainRouter : Router() {
     fun showAccountScreen(accountId: Long) {
         applyCommand(Forward(Screens.ACCOUNT.name, accountId))
     }
+
+    fun showStatistics() {
+        applyCommand(Forward(Screens.STATISTICS.name, Bundle()))
+    }
 }

@@ -88,6 +88,9 @@ android {
         implementation "android.arch.persistence.room:rxjava2:$roomVersion"
         kapt "android.arch.persistence.room:compiler:$roomVersion"
 
+        // AndroidMpChart
+        implementation "com.github.PhilJay:MPAndroidChart:$MpChartVersion"
+
 
         testImplementation "junit:junit:$junit"
         androidTestImplementation "com.android.support.test:runner:$test_runner"
@@ -107,6 +110,9 @@ android {
             renderscriptDebuggable false
             minifyEnabled true
             shrinkResources true
+        }
+        debug {
+            testCoverageEnabled = true
         }
     }
 }

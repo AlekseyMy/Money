@@ -1,5 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.7.5.201505241946"
+}
 
 buildscript {
 
@@ -17,6 +22,7 @@ buildscript {
         rxJavaVersion = "2.1.9"
         supportLibrary = "28.0.0-beta01"
         roomVersion = "1.1.1"
+        MpChartVersion = "v3.0.3"
 
         junit = "4.12"
         test_runner = "1.0.2"

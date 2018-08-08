@@ -43,4 +43,5 @@
     <string name="periodicOperations">Периодические</string>
     <string name="empty_periodic_operations_list">Нет периодических операций</string>
     <style name="delete">Удалить</style>
+    <string name="statistics">Статистика</string>
 </resources>

@@ -8,6 +8,7 @@ import yandexschool.dmpolyakov.money.repository.CurrencyRepositoryImpl
 import yandexschool.dmpolyakov.money.ui.MainPresenter
 import yandexschool.dmpolyakov.money.ui.about.AboutFragment
 import yandexschool.dmpolyakov.money.ui.settings.SettingsFragment
+import yandexschool.dmpolyakov.money.ui.statistics.StatisticsFragment
 import yandexschool.dmpolyakov.money.ui.tracker.TrackerFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.AccountFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.operations.OperationsFragment
@@ -38,6 +39,9 @@ abstract class MainModule {
 
     @ContributesAndroidInjector(modules = [AccountModule::class])
     abstract fun contributePeriodicOperationsFragment(): PeriodicOperationsFragment
+
+    @ContributesAndroidInjector(modules = [StatisticsModule::class])
+    abstract fun contributeStatisticsFragment(): StatisticsFragment
 
     @Module
     companion object {

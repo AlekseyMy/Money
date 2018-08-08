@@ -12,6 +12,12 @@
         android:title="@string/tracker" />
 
     <item
+        android:id="@+id/navStatistics"
+        android:icon="@drawable/ic_pie_chart"
+        android:title="@string/statistics"
+        />
+
+    <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/settings" />

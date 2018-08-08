@@ -5,5 +5,6 @@ enum class Screens {
     ABOUT,
     ACCOUNT,
     SETTINGS,
-    TRACKER
+    TRACKER,
+    STATISTICS
 }

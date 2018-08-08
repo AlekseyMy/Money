@@ -43,4 +43,8 @@
     <string name="empty_periodic_operations_list">No periodic operations</string>
     <style name="delete">Delete</style>
     <string name="statistics">Statistics</string>
+    <string name="since">Since</string>
+    <string name="until">Until</string>
+    <string name="rate">Profit/Loss</string>
+    <string name="enterPeriod">Enter period</string>
 </resources>

@@ -1,14 +1,57 @@
 package yandexschool.dmpolyakov.money.ui.statistics
 
+import com.arellomobile.mvp.InjectViewState
+import yandexschool.dmpolyakov.money.OperationCategory
+import yandexschool.dmpolyakov.money.R
+import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
+import java.math.BigDecimal
 import javax.inject.Inject
 
+@InjectViewState
 class StatisticsPresenter @Inject constructor(
         val router: MainRouter,
         private val financeOperationRep: FinanceOperationRepository):
         BaseMvpPresenter<StatisticsView>(router) {
+
+    private var since: Long? = null
+    private var until: Long? = null
+    private var operations = listOf<FinanceOperation>()
+
+    fun setSince(time: Long) {
+        since = time
+    }
+
+    fun setUntil(time: Long) {
+        until = time
+    }
+
+    fun getTransactionInPeriod() {
+        if (since != null && until != null) {
+            bind(onUi(financeOperationRep.getFinOpInPeriod(since!!, until!!))
+                    .subscribe({
+                        operations = it
+                        viewState.setChartData(it)
+                    }, {
+                        viewState.showError(it)
+                    }))
+        } else {
+            viewState.showToast(R.string.enterPeriod)
+        }
+    }
+
+    fun computeCategoryStatistics(title: String) {
+        var count: BigDecimal = BigDecimal("0.0")
+        val category = OperationCategory.valueOf(title)
+        for (item in operations) {
+            if (item.category == category) {
+                count.add(item.amount)
+            }
+        }
+        viewState.setTransactionDetails(title, category.icon , count.toString())
+    }
 
     override fun getScreenTag(): String = "Statistics presenter"
 

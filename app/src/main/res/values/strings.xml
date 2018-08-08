@@ -44,4 +44,8 @@
     <string name="empty_periodic_operations_list">Нет периодических операций</string>
     <style name="delete">Удалить</style>
     <string name="statistics">Статистика</string>
+    <string name="since">С</string>
+    <string name="until">До</string>
+    <string name="rate">Прибыль/убыток</string>
+    <string name="enterPeriod">Введите период</string>
 </resources>

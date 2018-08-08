@@ -53,4 +53,6 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
     override fun updateFinanceOperation(financeOperation: FinanceOperation): Completable =
             Completable.fromAction { db.financeOperationDao.update(financeOperation) }.subscribeOn(Schedulers.io())
 
+    override fun getFinOpInPeriod(since: Long, until: Long): Flowable<List<FinanceOperation>> =
+            db.financeOperationDao.getFinOpInPeriod(since, until)
 }

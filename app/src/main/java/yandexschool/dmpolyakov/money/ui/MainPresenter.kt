@@ -34,6 +34,7 @@ class MainPresenter @Inject constructor(var router: MainRouter,
             R.id.about -> router.showAboutScreen()
             R.id.tracker -> router.showTrackerScreen()
             R.id.settings -> router.showSettingsScreen()
+            R.id.navStatistics -> router.showStatistics()
         }
     }
 

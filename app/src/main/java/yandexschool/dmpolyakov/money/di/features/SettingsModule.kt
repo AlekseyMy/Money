@@ -11,6 +11,7 @@ object SettingsModule {
 
     @JvmStatic
     @Provides
-    fun provideSettingsPresenter(router: MainRouter) = SettingsPresenter(router)
+    fun provideSettingsPresenter(router: MainRouter) =
+            SettingsPresenter(router)
 
 }

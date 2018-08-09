@@ -39,7 +39,16 @@
     <string name="canceled">Canceled</string>
     <string name="inProgress">InProgress</string>
     <string name="done">Done</string>
-    <string name="periodicOperations">Periodic</string>
+    <string name="periodic_operations">Periodic</string>
     <string name="empty_periodic_operations_list">No periodic operations</string>
     <style name="delete">Delete</style>
+    <string name="statistics">Statistics</string>
+    <string name="since">Since</string>
+    <string name="until">Until</string>
+    <string name="rate">Profit/Loss</string>
+    <string name="enter_period">Enter period</string>
+    <string-array name="income_expense">
+        <item>Expense</item>
+        <item>Income</item>
+    </string-array>
 </resources>

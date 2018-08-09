@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
@@ -14,6 +15,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.delegateadapter.delegate.diff.DiffUtilCompositeAdapter
 import com.example.delegateadapter.delegate.diff.IComparableItem
+import kotlinx.android.synthetic.main.dialog_add_new_operation.*
 import kotlinx.android.synthetic.main.fragment_operations.*
 import yandexschool.dmpolyakov.money.*
 import yandexschool.dmpolyakov.money.Currency
@@ -82,12 +84,13 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
         with(addNewOperationDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
-            val amount = findViewById<TextInputLayout>(R.id.amountPeriodic)
-            val type = findViewById<RadioGroup>(R.id.type)
+            val title: TextInputLayout? = titlePeriodic
+            val amount: TextInputLayout? = amountPeriodic
+            val type: RadioGroup? = type
 
-            val currency = findViewById<Spinner>(R.id.spinnerCurrency)
-            val category = findViewById<Spinner>(R.id.spinnerCategory)
+            val currency: Spinner? = spinnerCurrency
+            val category: Spinner? = spinnerCategory
+            val doPattern: CheckBox? = doPatternCheck
 
             val days = findViewById<EditText>(R.id.inputDays)
 
@@ -140,23 +143,24 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                 else
                     days?.text.toString().daysToMillis()
 
-                presenter.addOperation(
-                        FinanceOperation(
-                                title = title?.editText?.text.toString(),
-                                currency = currency?.selectedItem as Currency,
-                                amount = BigDecimal(amount?.editText?.text?.toString()),
-                                type = operationType,
-                                category = category?.selectedItem as OperationCategory,
-                                date = currentDate,
-                                timeStart = time,
-                                timeFinish = timeFinish,
-                                accountKey = 0,
-                                state = if (timeFinish > time)
-                                    FinanceOperationState.InProgress
-                                else
-                                    FinanceOperationState.Done
-                        )
+                val financeOperation = FinanceOperation(
+                        title = title?.editText?.text.toString(),
+                        currency = currency?.selectedItem as Currency,
+                        amount = BigDecimal(amount?.editText?.text?.toString()),
+                        type = operationType,
+                        category = category?.selectedItem as OperationCategory,
+                        date = currentDate,
+                        timeStart = time,
+                        timeFinish = timeFinish,
+                        accountKey = 0,
+                        state = if (timeFinish > time)
+                            FinanceOperationState.InProgress
+                        else
+                            FinanceOperationState.Done
                 )
+
+                presenter.addOperation(financeOperation)
+                createPattern(doPattern?.isChecked ?: false, financeOperation)
 
                 dismiss()
             }
@@ -169,6 +173,12 @@ class OperationsFragment : BaseMvpFragment<OperationsPresenter>(), OperationsVie
                 currency?.setSelection(0)
                 title?.requestFocus()
             }
+        }
+    }
+
+    private fun createPattern(checkValue: Boolean, financeOperation: FinanceOperation) {
+        if (checkValue) {
+            presenter.createFinancePattern(financeOperation)
         }
     }
 

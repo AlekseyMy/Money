@@ -49,4 +49,6 @@
     <string name="enter_period">Enter period</string>
     <string name="enter_data_and_search">Enter a period and search</string>
     <string name="create_pattern">Create pattern</string>
+    <string name="patterns">Patterns</string>
+    <string name="empty_patterns_list">Patterns don\'t exist</string>
 </resources>

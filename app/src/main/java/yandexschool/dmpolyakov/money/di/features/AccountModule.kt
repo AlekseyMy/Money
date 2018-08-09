@@ -35,5 +35,5 @@ object AccountModule {
     fun providePeriodicOperationPresenter(router: MainRouter,
                                           financeOperationRep: FinanceOperationRepository) =
             PeriodicOperationsPresenter(router, financeOperationRep)
-    
+
 }

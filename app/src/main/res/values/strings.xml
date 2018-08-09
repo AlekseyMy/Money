@@ -49,4 +49,5 @@
     <string name="rate">Прибыль/убыток</string>
     <string name="enter_period">Введите период</string>
     <string name="enter_data_and_search">Задайте период</string>
+    <string name="create_pattern">Создать паттерн</string>
 </resources>

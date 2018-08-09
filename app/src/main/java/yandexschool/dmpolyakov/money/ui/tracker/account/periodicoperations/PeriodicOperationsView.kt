@@ -6,7 +6,7 @@ import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpView
 
 @StateStrategyType(AddToEndSingleStrategy::class)
-interface PeriodicOperationsView: BaseMvpView {
+interface PeriodicOperationsView : BaseMvpView {
     fun showOperations(operations: List<FinanceOperation>)
     fun loadAccount()
 }

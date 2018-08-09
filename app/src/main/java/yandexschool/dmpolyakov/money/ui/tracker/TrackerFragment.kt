@@ -152,6 +152,11 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             currency?.setSelection(Currency.values().toList().indexOf(financeOperation.currency))
             category?.setSelection(OperationType.Income.getCategories().indexOf(financeOperation.category))
 
+            when (financeOperation.type) {
+                OperationType.Income -> type?.check(R.id.income)
+                OperationType.Expense -> type?.check(R.id.expense)
+            }
+            type?.checkedRadioButtonId
             type?.setOnCheckedChangeListener { radioGroup, id ->
                 val adapter = (category?.adapter as CategoryArrayAdapter)
                 adapter.clear()

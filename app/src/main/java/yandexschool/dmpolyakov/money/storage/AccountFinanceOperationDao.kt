@@ -17,8 +17,8 @@ abstract class AccountFinanceOperationDao {
 
     @Transaction
     open fun insertFinanceOperationAndUpdateAccount(financeOperation: FinanceOperation,
-                                               accountId: Long,
-                                               amount: BigDecimal) {
+                                                    accountId: Long,
+                                                    amount: BigDecimal) {
         insertFinanceOperation(financeOperation)
         updateAccount(accountId, amount)
     }

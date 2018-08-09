@@ -1,7 +1,6 @@
 package yandexschool.dmpolyakov.money.ui.tracker.account.operations
 
 import com.arellomobile.mvp.InjectViewState
-import yandexschool.dmpolyakov.money.FinanceOperationState
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter

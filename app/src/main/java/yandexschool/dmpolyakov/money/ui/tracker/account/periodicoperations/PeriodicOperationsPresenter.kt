@@ -12,7 +12,7 @@ import javax.inject.Inject
 @InjectViewState
 class PeriodicOperationsPresenter @Inject constructor(
         router: MainRouter,
-        private val financeOperationRep: FinanceOperationRepository): BaseMvpPresenter<PeriodicOperationsView>(router) {
+        private val financeOperationRep: FinanceOperationRepository) : BaseMvpPresenter<PeriodicOperationsView>(router) {
 
     override fun getScreenTag(): String = "PeriodicOperationsPresenter"
 

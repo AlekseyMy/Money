@@ -13,7 +13,7 @@ import javax.inject.Inject
 @InjectViewState
 class StatisticsPresenter @Inject constructor(
         val router: MainRouter,
-        private val financeOperationRep: FinanceOperationRepository):
+        private val financeOperationRep: FinanceOperationRepository) :
         BaseMvpPresenter<StatisticsView>(router) {
 
     private var since: Long? = null
@@ -44,7 +44,7 @@ class StatisticsPresenter @Inject constructor(
                 amount = amount.plus(item.amount)
             }
         }
-        viewState.setTransactionDetails(title, category.icon , amount.toString())
+        viewState.setTransactionDetails(title, category.icon, amount.toString())
     }
 
     fun getTransactionInPeriod() {

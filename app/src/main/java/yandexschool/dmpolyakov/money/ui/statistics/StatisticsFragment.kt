@@ -1,7 +1,6 @@
 package yandexschool.dmpolyakov.money.ui.statistics
 
 import android.app.DatePickerDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import kotlinx.android.synthetic.main.abc_activity_chooser_view.view.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.R
@@ -23,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class StatisticsFragment: BaseMvpFragment<StatisticsPresenter>(), StatisticsView {
+class StatisticsFragment : BaseMvpFragment<StatisticsPresenter>(), StatisticsView {
 
     companion object {
         val instance = StatisticsFragment()
@@ -68,7 +66,7 @@ class StatisticsFragment: BaseMvpFragment<StatisticsPresenter>(), StatisticsView
             inflater.inflate(R.layout.fragment_statistics, container, false)
 
     private fun setListeners() {
-        val listener = {v: View, listener: DatePickerDialog.OnDateSetListener ->
+        val listener = { v: View, listener: DatePickerDialog.OnDateSetListener ->
             DatePickerDialog(context,
                     listener,
                     cal.get(Calendar.YEAR),

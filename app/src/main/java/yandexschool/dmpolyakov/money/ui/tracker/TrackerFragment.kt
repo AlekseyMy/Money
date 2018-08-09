@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
@@ -15,6 +16,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.delegateadapter.delegate.diff.DiffUtilCompositeAdapter
 import com.example.delegateadapter.delegate.diff.IComparableItem
+import kotlinx.android.synthetic.main.dialog_add_new_operation.*
 import kotlinx.android.synthetic.main.fragment_tracker.*
 import yandexschool.dmpolyakov.money.*
 import yandexschool.dmpolyakov.money.models.Account
@@ -123,14 +125,17 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
         with(addOldOperationDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
-            val amount = findViewById<TextInputLayout>(R.id.amountPeriodic)
-            val type = findViewById<RadioGroup>(R.id.type)
+            val title: TextInputLayout? = titlePeriodic
+            val amount: TextInputLayout? = amountPeriodic
+            val type: RadioGroup? = type
 
-            val currency = findViewById<Spinner>(R.id.spinnerCurrency)
-            val category = findViewById<Spinner>(R.id.spinnerCategory)
+            val currency: Spinner? = spinnerCurrency
+            val category: Spinner? = spinnerCategory
+            val doPattern: CheckBox? = doPatternCheck
 
-            val days = findViewById<EditText>(R.id.inputDays)
+            doPattern?.visibility = View.GONE
+
+            val days: EditText? = inputDays
 
             if (BuildConfig.DEBUG) {
                 days?.hint = resources.getString(R.string.debug_repeat_across)
@@ -152,6 +157,11 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             currency?.setSelection(Currency.values().toList().indexOf(financeOperation.currency))
             category?.setSelection(OperationType.Income.getCategories().indexOf(financeOperation.category))
 
+            when (financeOperation.type) {
+                OperationType.Income -> type?.check(R.id.income)
+                OperationType.Expense -> type?.check(R.id.expense)
+            }
+            type?.checkedRadioButtonId
             type?.setOnCheckedChangeListener { radioGroup, id ->
                 val adapter = (category?.adapter as CategoryArrayAdapter)
                 adapter.clear()
@@ -266,8 +276,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                         Account(
                                 title = title?.editText?.text.toString(),
                                 amount = BigDecimal(amount),
-                                currency = currency?.selectedItem as Currency,
-                                id = 0L))
+                                currency = currency?.selectedItem as Currency))
                 hideAddAccountDialog()
             }
 

@@ -19,7 +19,7 @@ class OperationsDelegateAdapter : KDelegateAdapter<FinanceOperation>() {
         date.text = item.date
         title.text = item.title
         icon.setImageResource(item.category.icon)
-        
+
         val s = "${item.amount} ${item.currency.sign}"
         amount.text = s
 

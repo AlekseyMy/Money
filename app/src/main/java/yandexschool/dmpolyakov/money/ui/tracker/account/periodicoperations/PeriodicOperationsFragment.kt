@@ -18,10 +18,10 @@ import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpFragment
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.EmptyStateDelegateAdapter
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.PeriodicOperationsDelegateAdapter
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.EmptyStateViewModel
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
 
-class PeriodicOperationsFragment: BaseMvpFragment<PeriodicOperationsPresenter>(),
+class PeriodicOperationsFragment : BaseMvpFragment<PeriodicOperationsPresenter>(),
         PeriodicOperationsView {
 
     @Inject

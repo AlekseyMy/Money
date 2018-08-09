@@ -1,7 +1,6 @@
 package yandexschool.dmpolyakov.money.models.converters
 
 import android.arch.persistence.room.TypeConverter
-import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.FinanceOperationState
 
 class FinanceOperationStateConverter {

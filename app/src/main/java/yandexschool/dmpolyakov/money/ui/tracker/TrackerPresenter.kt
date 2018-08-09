@@ -89,7 +89,7 @@ class TrackerPresenter @Inject constructor(
         bind(onUi(financeOperationRep.updateFinanceOperation(operation))
                 .subscribe({
 
-                },{
+                }, {
                     viewState.showError(it)
                 }))
     }

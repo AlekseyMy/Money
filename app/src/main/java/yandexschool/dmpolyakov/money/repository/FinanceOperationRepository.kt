@@ -13,6 +13,7 @@ interface FinanceOperationRepository {
     fun getPeriodicFinanceOperationsById(accountId: Long, timeNow: Long, state: String): Flowable<List<FinanceOperation>>
     fun getFinanceOperationsByIdAndInState(accountId: Long,
                                            state: String = FinanceOperationState.Done.name): Flowable<List<FinanceOperation>>
+
     fun updateFinanceOperation(financeOperation: FinanceOperation): Completable
     fun getPeriodicFinanceOperations(timeNow: Long, state: String): Flowable<List<FinanceOperation>>
     fun getFinOpInPeriod(since: Long, until: Long): Flowable<List<FinanceOperation>>

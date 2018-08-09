@@ -1,7 +1,6 @@
 package yandexschool.dmpolyakov.money.navigation
 
 import android.os.Bundle
-import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.commands.Back
 import ru.terrakok.cicerone.commands.Command

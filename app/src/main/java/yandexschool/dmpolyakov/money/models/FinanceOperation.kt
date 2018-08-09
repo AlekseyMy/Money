@@ -11,12 +11,12 @@ import java.math.BigDecimal
 
 @Parcelize
 @Entity(foreignKeys = [
-     ForeignKey(
-             entity = Account::class,
-             parentColumns = ["id"],
-             childColumns = ["account_id"],
-             onDelete = CASCADE
-     )]
+    ForeignKey(
+            entity = Account::class,
+            parentColumns = ["id"],
+            childColumns = ["account_id"],
+            onDelete = CASCADE
+    )]
 )
 @TypeConverters(AmountConverter::class,
         CurrencyConverter::class,

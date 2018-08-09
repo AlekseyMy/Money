@@ -2,7 +2,6 @@ package yandexschool.dmpolyakov.money.models.converters
 
 import android.arch.persistence.room.TypeConverter
 import yandexschool.dmpolyakov.money.OperationCategory
-import yandexschool.dmpolyakov.money.R
 
 class OperationCategoryConverter {
     @TypeConverter
@@ -14,7 +13,7 @@ class OperationCategoryConverter {
         for (item in OperationCategory.values()) {
             if (data == item.name)
                 return item
-            }
+        }
         return throw Exception("Unknown operation category")
     }
 }

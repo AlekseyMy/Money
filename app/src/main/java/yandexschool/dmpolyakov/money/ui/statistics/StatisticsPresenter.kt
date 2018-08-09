@@ -38,19 +38,19 @@ class StatisticsPresenter @Inject constructor(
                         viewState.showError(it)
                     }))
         } else {
-            viewState.showToast(R.string.enterPeriod)
+            viewState.showToast(R.string.enter_period)
         }
     }
 
     fun computeCategoryStatistics(title: String) {
-        var count: BigDecimal = BigDecimal("0.0")
+        var amount = BigDecimal.valueOf(0.0)
         val category = OperationCategory.valueOf(title)
         for (item in operations) {
             if (item.category == category) {
-                count.add(item.amount)
+                amount = amount.plus(item.amount)
             }
         }
-        viewState.setTransactionDetails(title, category.icon , count.toString())
+        viewState.setTransactionDetails(title, category.icon , amount.toString())
     }
 
     override fun getScreenTag(): String = "Statistics presenter"

@@ -10,40 +10,42 @@
         android:id="@+id/sinceEditDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="date"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/untilEditDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinceText" />
+        app:layout_constraintEnd_toStartOf="@id/untilText"
+        app:layout_constraintStart_toEndOf="@+id/sinceText"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sinceText"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/since"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/untilText"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/sinceEditDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/untilText"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/until"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sinceText"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/untilEditDate"
+        app:layout_constraintStart_toEndOf="@+id/sinceEditDate"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.mikephil.charting.charts.PieChart
@@ -58,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalValueText" />
+        app:layout_constraintTop_toBottomOf="@+id/spIncomeExp" />
 
     <TextView
         android:id="@+id/totalText"
@@ -81,7 +83,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/totalText"
-        app:layout_constraintTop_toBottomOf="@+id/sinceEditDate" />
+        app:layout_constraintTop_toBottomOf="@+id/untilEditDate" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
@@ -112,7 +114,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/catValueText"
@@ -129,25 +132,37 @@
         android:id="@+id/getStatImg"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/totalValueText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/untilText"
+        app:layout_constraintStart_toEndOf="@+id/spIncomeExp"
+        app:layout_constraintTop_toBottomOf="@+id/totalValueText"
         app:srcCompat="@drawable/ic_search" />
 
     <EditText
         android:id="@+id/untilEditDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
+        android:focusable="false"
         android:inputType="date"
         android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/untilText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spIncomeExp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/getStatImg"
-        app:layout_constraintStart_toEndOf="@+id/sinceEditDate"
-        app:layout_constraintTop_toBottomOf="@+id/sinceText" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalText" />
 
 </android.support.constraint.ConstraintLayout>

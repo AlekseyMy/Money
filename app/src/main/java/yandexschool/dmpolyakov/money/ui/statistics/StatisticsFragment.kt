@@ -13,6 +13,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import kotlinx.android.synthetic.main.abc_activity_chooser_view.view.*
 import kotlinx.android.synthetic.main.fragment_statistics.*
+import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
@@ -74,14 +75,9 @@ class StatisticsFragment: BaseMvpFragment<StatisticsPresenter>(), StatisticsView
                     cal.get(Calendar.DAY_OF_MONTH)).show()
         }
 
-        sinceEditDate.setOnClickListener {
-            listener.invoke(it, dateSetListenerSince)
+        sinceEditDate.setOnClickListener { listener.invoke(it, dateSetListenerSince) }
 
-        }
-
-        untilEditDate.setOnClickListener {
-            listener.invoke(it, dateSetListenerUntil)
-        }
+        untilEditDate.setOnClickListener { listener.invoke(it, dateSetListenerUntil) }
 
         getStatImg.setOnClickListener { presenter.getTransactionInPeriod() }
 
@@ -101,10 +97,11 @@ class StatisticsFragment: BaseMvpFragment<StatisticsPresenter>(), StatisticsView
         super.onViewCreated(view, savedInstanceState)
         pieChart = PieChartManager(pieChartView)
         setListeners()
+        spIncomeExp.adapter = TypeArrayAdapter(context!!, OperationType.values().toList())
     }
 
     override fun setChartData(operations: List<FinanceOperation>) {
-        pieChart.setData(operations)
+        pieChart.setData(operations, spIncomeExp.selectedItem as OperationType)
     }
 
     override fun setTransactionDetails(title: String, img: Int, amount: String) {

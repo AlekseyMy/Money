@@ -7,25 +7,28 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
+import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 
 class PieChartManager(private val chart: PieChart) {
     var chartData = listOf<FinanceOperation>()
 
-    fun setData(operations: List<FinanceOperation>) {
+    fun setData(operations: List<FinanceOperation>, type: OperationType) {
         chartData = operations
-        setup()
+        setup(type)
     }
 
-    private fun setup() {
+    private fun setup(type: OperationType) {
         val pieData = hashMapOf<String, Float>()
 
         for (item in chartData) {
-            val title = chart.context.getString(item.category.title)
-            if (pieData[title] == null) {
-                pieData[title] = Math.abs(item.amount.toFloat())
-            } else {
-                pieData[title] = (pieData[title] ?: 0F) + Math.abs(item.amount.toFloat())
+            if (item.type == type) {
+                val title = chart.context.getString(item.category.title)
+                if (pieData[title] == null) {
+                    pieData[title] = Math.abs(item.amount.toFloat())
+                } else {
+                    pieData[title] = (pieData[title] ?: 0F) + Math.abs(item.amount.toFloat())
+                }
             }
         }
 

@@ -36,15 +36,20 @@ class StatisticsPresenter @Inject constructor(
         viewState.setTotal(amount.toString())
     }
 
-    fun computeCategoryStatistics(title: String) {
+    fun computeCategoryStatistics(titleId: Int) {
         var amount = BigDecimal.valueOf(0.0)
-        val category = OperationCategory.valueOf(title)
+        var category: OperationCategory = OperationCategory.Other
+        for (item in OperationCategory.values()) {
+            if (titleId == item.title) {
+                category = item
+            }
+        }
         for (item in operations) {
             if (item.category == category) {
                 amount = amount.plus(item.amount)
             }
         }
-        viewState.setTransactionDetails(title, category.icon, amount.toString())
+        viewState.setTransactionDetails(titleId, category.icon, amount.toString())
     }
 
     fun getTransactionInPeriod() {

@@ -1,11 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-apply plugin: 'jacoco'
-
-jacoco {
-    toolVersion = "0.7.5.201505241946"
-}
-
 buildscript {
 
 

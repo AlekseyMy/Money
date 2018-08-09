@@ -107,7 +107,8 @@
                 android:id="@+id/categoryImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp" />
+                android:layout_margin="8dp"
+                android:background="@drawable/ic_autorenew" />
 
             <TextView
                 android:id="@+id/catNameText"

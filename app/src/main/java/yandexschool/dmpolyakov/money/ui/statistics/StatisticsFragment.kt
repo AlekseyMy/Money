@@ -79,14 +79,23 @@ class StatisticsFragment : BaseMvpFragment<StatisticsPresenter>(), StatisticsVie
         untilEditDate.setOnClickListener { listener.invoke(it, dateSetListenerUntil) }
 
         getStatImg.setOnClickListener {
-            setTransactionDetails("", null, "")
+            setTransactionDetails(null, null, "")
             presenter.getTransactionInPeriod()
         }
 
         pieChartView.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 if (e != null) {
-                    presenter.computeCategoryStatistics((e as PieEntry).label)
+                    presenter.computeCategoryStatistics(when ((e as PieEntry).label) {
+                        getString(R.string.category_salary) -> R.string.category_salary
+                        getString(R.string.category_gift) -> R.string.category_gift
+                        getString(R.string.category_other) -> R.string.category_other
+                        getString(R.string.category_transport) -> R.string.category_transport
+                        getString(R.string.category_products) -> R.string.category_products
+                        getString(R.string.category_health) -> R.string.category_health
+                        getString(R.string.category_education) -> R.string.category_education
+                        else -> R.string.category_other
+                    })
                 }
             }
 
@@ -106,13 +115,17 @@ class StatisticsFragment : BaseMvpFragment<StatisticsPresenter>(), StatisticsVie
         pieChart.setData(operations, spIncomeExp.selectedItem as OperationType)
     }
 
-    override fun setTransactionDetails(title: String, img: Int?, amount: String) {
+    override fun setTransactionDetails(titleId: Int?, img: Int?, amount: String) {
         if (img != null) {
             categoryImg.setImageResource(img)
         } else {
             categoryImg.setImageDrawable(null)
         }
-        catNameText.text = title
+        if (titleId != null) {
+            catNameText.text = getString(titleId)
+        } else {
+            catNameText.text = ""
+        }
         catValueText.text = amount
     }
 

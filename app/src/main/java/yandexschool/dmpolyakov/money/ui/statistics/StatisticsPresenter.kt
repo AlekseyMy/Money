@@ -1,12 +1,14 @@
 package yandexschool.dmpolyakov.money.ui.statistics
 
 import com.arellomobile.mvp.InjectViewState
+import yandexschool.dmpolyakov.money.Currency
 import yandexschool.dmpolyakov.money.OperationCategory
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
+import yandexschool.dmpolyakov.money.utils.toRubbles
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -31,7 +33,7 @@ class StatisticsPresenter @Inject constructor(
     private fun updateTotal(operations: List<FinanceOperation>) {
         var amount = BigDecimal.valueOf(0.0)
         for (item in operations) {
-            amount = amount.plus(item.amount)  // делать в другом потоке
+            amount = amount.plus(item.amount.toRubbles(item.currency))  // делать в другом потоке
         }
         viewState.setTotal(amount.toString())
     }
@@ -46,10 +48,10 @@ class StatisticsPresenter @Inject constructor(
         }
         for (item in operations) {
             if (item.category == category) {
-                amount = amount.plus(item.amount)
+                amount = amount.plus(item.amount.toRubbles(item.currency))
             }
         }
-        viewState.setTransactionDetails(titleId, category.icon, amount.toString())
+        viewState.setTransactionDetails(titleId, category.icon, "%.2f".format(amount), Currency.Rubble.sign)
     }
 
     fun getTransactionInPeriod() {

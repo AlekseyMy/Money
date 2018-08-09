@@ -9,6 +9,7 @@ import com.github.mikephil.charting.utils.ColorTemplate
 import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.FinanceOperation
+import yandexschool.dmpolyakov.money.utils.toRubbles
 
 class PieChartManager(private val chart: PieChart) {
     var chartData = listOf<FinanceOperation>()
@@ -29,9 +30,9 @@ class PieChartManager(private val chart: PieChart) {
             if (item.type == type) {
                 val title = chart.context.getString(item.category.title)
                 if (pieData[title] == null) {
-                    pieData[title] = Math.abs(item.amount.toFloat())
+                    pieData[title] = Math.abs(item.amount.toRubbles(item.currency).toFloat())
                 } else {
-                    pieData[title] = (pieData[title] ?: 0F) + Math.abs(item.amount.toFloat())
+                    pieData[title] = (pieData[title] ?: 0F) + Math.abs(item.amount.toRubbles(item.currency).toFloat())
                 }
             }
         }

@@ -79,7 +79,7 @@ class StatisticsFragment : BaseMvpFragment<StatisticsPresenter>(), StatisticsVie
         untilEditDate.setOnClickListener { listener.invoke(it, dateSetListenerUntil) }
 
         getStatImg.setOnClickListener {
-            setTransactionDetails(null, null, "")
+            setTransactionDetails(null, null, "", "")
             presenter.getTransactionInPeriod()
         }
 
@@ -115,7 +115,7 @@ class StatisticsFragment : BaseMvpFragment<StatisticsPresenter>(), StatisticsVie
         pieChart.setData(operations, spIncomeExp.selectedItem as OperationType)
     }
 
-    override fun setTransactionDetails(titleId: Int?, img: Int?, amount: String) {
+    override fun setTransactionDetails(titleId: Int?, img: Int?, amount: String, sign: String) {
         if (img != null) {
             categoryImg.setImageResource(img)
         } else {
@@ -126,7 +126,9 @@ class StatisticsFragment : BaseMvpFragment<StatisticsPresenter>(), StatisticsVie
         } else {
             catNameText.text = ""
         }
-        catValueText.text = amount
+
+        val lint = "$amount $sign"
+        catValueText.text = lint
     }
 
     override fun setTotal(value: String) {

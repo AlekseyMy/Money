@@ -8,6 +8,6 @@ import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpView
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface StatisticsView : BaseMvpView {
     fun setChartData(operations: List<FinanceOperation>)
-    fun setTransactionDetails(titleId: Int?, img: Int?, amount: String)
+    fun setTransactionDetails(titleId: Int?, img: Int?, amount: String, sign: String)
     fun setTotal(value: String)
 }

@@ -28,18 +28,12 @@ class StatisticsPresenter @Inject constructor(
         until = time
     }
 
-    fun getTransactionInPeriod() {
-        if (since != null && until != null) {
-            bind(onUi(financeOperationRep.getFinOpInPeriod(since!!, until!!))
-                    .subscribe({
-                        operations = it
-                        viewState.setChartData(it)
-                    }, {
-                        viewState.showError(it)
-                    }))
-        } else {
-            viewState.showToast(R.string.enter_period)
+    private fun updateTotal(operations: List<FinanceOperation>) {
+        var amount = BigDecimal.valueOf(0.0)
+        for (item in operations) {
+            amount = amount.plus(item.amount)  // делать в другом потоке
         }
+        viewState.setTotal(amount.toString())
     }
 
     fun computeCategoryStatistics(title: String) {
@@ -51,6 +45,21 @@ class StatisticsPresenter @Inject constructor(
             }
         }
         viewState.setTransactionDetails(title, category.icon , amount.toString())
+    }
+
+    fun getTransactionInPeriod() {
+        if (since != null && until != null) {
+            bind(onUi(financeOperationRep.getFinOpInPeriod(since!!, until!!))
+                    .subscribe({
+                        operations = it
+                        viewState.setChartData(it)
+                        updateTotal(it)
+                    }, {
+                        viewState.showError(it)
+                    }))
+        } else {
+            viewState.showToast(R.string.enter_period)
+        }
     }
 
     override fun getScreenTag(): String = "Statistics presenter"

@@ -6,6 +6,7 @@ import com.github.mikephil.charting.data.DataSet
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.models.FinanceOperation
@@ -40,9 +41,13 @@ class PieChartManager(private val chart: PieChart) {
         }
 
         val dataSet = PieDataSet(pieEntries, "")
-        dataSet.valueTextSize = 18f
+        dataSet.apply {
+            valueTextSize = 18f
+            valueFormatter = PercentFormatter()
+            colors = ColorTemplate.COLORFUL_COLORS.toList()
+        }
+
         val data = PieData(dataSet)
-        dataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
 
         chart!!.apply {
             this.data = data

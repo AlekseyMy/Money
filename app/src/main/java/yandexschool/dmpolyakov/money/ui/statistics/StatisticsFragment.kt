@@ -1,6 +1,7 @@
 package yandexschool.dmpolyakov.money.ui.statistics
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -79,7 +80,10 @@ class StatisticsFragment: BaseMvpFragment<StatisticsPresenter>(), StatisticsView
 
         untilEditDate.setOnClickListener { listener.invoke(it, dateSetListenerUntil) }
 
-        getStatImg.setOnClickListener { presenter.getTransactionInPeriod() }
+        getStatImg.setOnClickListener {
+            setTransactionDetails("", null, "")
+            presenter.getTransactionInPeriod()
+        }
 
         pieChartView.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
@@ -104,9 +108,17 @@ class StatisticsFragment: BaseMvpFragment<StatisticsPresenter>(), StatisticsView
         pieChart.setData(operations, spIncomeExp.selectedItem as OperationType)
     }
 
-    override fun setTransactionDetails(title: String, img: Int, amount: String) {
-        categoryImg.setImageResource(img)
+    override fun setTransactionDetails(title: String, img: Int?, amount: String) {
+        if (img != null) {
+            categoryImg.setImageResource(img)
+        } else {
+            categoryImg.setImageDrawable(null)
+        }
         catNameText.text = title
         catValueText.text = amount
+    }
+
+    override fun setTotal(value: String) {
+        totalValueText.text = value
     }
 }

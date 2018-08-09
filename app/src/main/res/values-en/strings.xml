@@ -47,8 +47,5 @@
     <string name="until">Until</string>
     <string name="rate">Profit/Loss</string>
     <string name="enter_period">Enter period</string>
-    <string-array name="income_expense">
-        <item>Expense</item>
-        <item>Income</item>
-    </string-array>
+    <string name="enter_data_and_search">Enter a period and search</string>
 </resources>

@@ -1,18 +1,21 @@
 package yandexschool.dmpolyakov.money.ui.statistics
 
-import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.data.DataSet
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import yandexschool.dmpolyakov.money.OperationType
+import yandexschool.dmpolyakov.money.R
 import yandexschool.dmpolyakov.money.models.FinanceOperation
 
 class PieChartManager(private val chart: PieChart) {
     var chartData = listOf<FinanceOperation>()
+
+    init {
+        chart.setNoDataText(chart.context.getString(R.string.enter_data_and_search))
+    }
 
     fun setData(operations: List<FinanceOperation>, type: OperationType) {
         chartData = operations

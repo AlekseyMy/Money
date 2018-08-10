@@ -28,8 +28,16 @@
         android:layout_marginStart="16dp"
         android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/item_detail_container"
+        app:layout_constraintEnd_toStartOf="@+id/verticalDivider"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/verticalDivider"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toEndOf="@+id/rvOperations" />
 
     <FrameLayout
         android:id="@+id/item_detail_container"
@@ -37,7 +45,9 @@
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rvOperations" />
+        app:layout_constraintStart_toEndOf="@+id/verticalDivider">
+
+    </FrameLayout>
 
 
 

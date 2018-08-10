@@ -49,8 +49,12 @@ class AccountFragment() : BaseMvpFragment<AccountPresenter>(), AccountView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        icBack.setOnClickListener {
-            router.back()
+        if (!resources.getBoolean(R.bool.two_pane)) {
+            icBack.setOnClickListener {
+                router.back()
+            }
+        } else {
+            icBack.visibility = View.GONE
         }
     }
 

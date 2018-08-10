@@ -34,12 +34,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/icBack"
         app:layout_constraintStart_toEndOf="@id/icBack"
-        app:layout_constraintTop_toTopOf="@id/icBack"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="MIR" />
 
     <TextView

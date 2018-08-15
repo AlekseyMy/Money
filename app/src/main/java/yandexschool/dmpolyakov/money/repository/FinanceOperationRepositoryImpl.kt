@@ -13,7 +13,7 @@ import yandexschool.dmpolyakov.money.utils.toRubbles
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): FinanceOperationRepository {
+class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase) : FinanceOperationRepository {
 
     override fun getFinanceOperations(accountId: Long): Flowable<List<FinanceOperation>> =
             db.financeOperationDao.getByAccountId(accountId)
@@ -26,7 +26,7 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
         return Completable.fromAction {
             db.accountFinanceOperationDao
                     .insertFinanceOperationAndUpdateAccount(operation,
-                            account.id()!!, when(account.currency) {
+                            account.id()!!, when (account.currency) {
                         Currency.Rubble -> operation.amount.toRubbles(operation.currency)
                         Currency.Dollar -> operation.amount.toDollars(operation.currency)
                     })
@@ -34,8 +34,8 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
     }
 
     override fun addPeriodicFinanceOperation(operation: FinanceOperation): Completable = Completable.fromAction {
-            db.financeOperationDao.insert(operation)
-        }.subscribeOn(Schedulers.io())
+        db.financeOperationDao.insert(operation)
+    }.subscribeOn(Schedulers.io())
 
     override fun getPeriodicFinanceOperationsById(accountId: Long,
                                                   timeNow: Long,
@@ -53,4 +53,6 @@ class FinanceOperationRepositoryImpl @Inject constructor(var db: AppDatabase): F
     override fun updateFinanceOperation(financeOperation: FinanceOperation): Completable =
             Completable.fromAction { db.financeOperationDao.update(financeOperation) }.subscribeOn(Schedulers.io())
 
+    override fun getFinOpInPeriod(since: Long, until: Long): Flowable<List<FinanceOperation>> =
+            db.financeOperationDao.getFinOpInPeriod(since, until)
 }

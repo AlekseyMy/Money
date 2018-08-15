@@ -1,7 +1,6 @@
 package yandexschool.dmpolyakov.money.navigation
 
 import android.os.Bundle
-import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.commands.Back
 import ru.terrakok.cicerone.commands.Command
@@ -42,5 +41,9 @@ class MainRouter : Router() {
 
     fun showAccountScreen(accountId: Long) {
         applyCommand(Forward(Screens.ACCOUNT.name, accountId))
+    }
+
+    fun showStatistics() {
+        applyCommand(Forward(Screens.STATISTICS.name, Bundle()))
     }
 }

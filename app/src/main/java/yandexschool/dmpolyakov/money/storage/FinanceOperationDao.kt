@@ -25,6 +25,9 @@ interface FinanceOperationDao {
     @Query("SELECT * FROM financeoperation WHERE (state == :state AND timeFinish < :timeNow)")
     fun getPeriodicFinanceOperations(timeNow: Long, state: String): Flowable<List<FinanceOperation>>
 
+    @Query("SELECT * FROM financeoperation WHERE (timeStart >= :since AND timeStart < :until)")
+    fun getFinOpInPeriod(since: Long, until: Long): Flowable<List<FinanceOperation>>
+
     @Insert
     fun insert(financeOperation: FinanceOperation)
 

@@ -2,7 +2,6 @@ package yandexschool.dmpolyakov.money.ui.base.rv_delegates
 
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.example.delegateadapter.delegate.KDelegateAdapter
 import kotlinx.android.synthetic.main.item_empty_state.*
 import yandexschool.dmpolyakov.money.R

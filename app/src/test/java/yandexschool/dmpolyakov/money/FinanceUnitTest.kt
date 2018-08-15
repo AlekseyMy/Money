@@ -34,9 +34,9 @@ class FinanceUnitTest {
     @Test
     fun sum_operations_only_income() {
         val op = listOf(
-                FinanceOperation("", 150.toBigDecimal(), OperationType.Income, OperationCategory.Salary, Currency.Rubble, "", 1L, 1L),
-                FinanceOperation("", 2.toBigDecimal(), OperationType.Income, OperationCategory.Salary, Currency.Dollar, "", 2L, 2L),
-                FinanceOperation("", 100.toBigDecimal(), OperationType.Income, OperationCategory.Salary, Currency.Rubble, "", 3L, 3L)
+                FinanceOperation("", 150.toBigDecimal(), OperationType.Income, OperationCategory.Salary, Currency.Rubble, "", 1L, 1L, FinanceOperationState.InProgress, 1L, 1L),
+                FinanceOperation("", 2.toBigDecimal(), OperationType.Income, OperationCategory.Salary, Currency.Dollar, "", 2L, 2L, FinanceOperationState.InProgress, 1L, 1L),
+                FinanceOperation("", 100.toBigDecimal(), OperationType.Income, OperationCategory.Salary, Currency.Rubble, "", 3L, 3L, FinanceOperationState.InProgress, 1L, 1L)
         )
 
         val res = 150.toRubbles(Currency.Rubble) + 2.toRubbles(Currency.Dollar) + 100.toRubbles(Currency.Rubble)
@@ -48,8 +48,8 @@ class FinanceUnitTest {
     @Test
     fun sum_operations_only_paid() {
         val op = listOf(
-                FinanceOperation("", 100.toBigDecimal(), OperationType.Expense, OperationCategory.Salary, Currency.Rubble, "", 1L, 1L),
-                FinanceOperation("", 3.toBigDecimal(), OperationType.Expense, OperationCategory.Salary, Currency.Dollar, "", 1L, 1L)
+                FinanceOperation("", 100.toBigDecimal(), OperationType.Expense, OperationCategory.Salary, Currency.Rubble, "", 1L, 1L, FinanceOperationState.InProgress, 1L, 1L),
+                FinanceOperation("", 3.toBigDecimal(), OperationType.Expense, OperationCategory.Salary, Currency.Dollar, "", 1L, 1L, FinanceOperationState.InProgress, 1L, 1L)
         )
 
         val res = (-100).toRubbles(Currency.Rubble) - 3.toRubbles(Currency.Dollar)

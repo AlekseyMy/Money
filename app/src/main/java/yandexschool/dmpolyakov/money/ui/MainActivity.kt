@@ -12,6 +12,7 @@ import yandexschool.dmpolyakov.money.navigation.Screens
 import yandexschool.dmpolyakov.money.ui.about.AboutFragment
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpActivity
 import yandexschool.dmpolyakov.money.ui.settings.SettingsFragment
+import yandexschool.dmpolyakov.money.ui.statistics.StatisticsFragment
 import yandexschool.dmpolyakov.money.ui.tracker.TrackerFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.AccountFragment
 import javax.inject.Inject
@@ -61,6 +62,7 @@ class MainActivity : BaseMvpActivity<MainPresenter>(), MainView {
             Screens.TRACKER -> TrackerFragment.instance
             Screens.SETTINGS -> SettingsFragment.instance
             Screens.ABOUT -> AboutFragment.instance
+            Screens.STATISTICS -> StatisticsFragment.instance
             Screens.ACCOUNT -> {
                 hideBottomNavigationMenu()
                 AccountFragment.newInstance(data as Long)

@@ -4,9 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import yandexschool.dmpolyakov.money.models.Account
 import yandexschool.dmpolyakov.money.navigation.MainRouter
 import yandexschool.dmpolyakov.money.repository.AccountRepository
-import yandexschool.dmpolyakov.money.repository.FinanceOperationRepository
 import yandexschool.dmpolyakov.money.ui.base.mvp.BaseMvpPresenter
-import java.math.BigDecimal
 import javax.inject.Inject
 
 

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
@@ -15,6 +16,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.delegateadapter.delegate.diff.DiffUtilCompositeAdapter
 import com.example.delegateadapter.delegate.diff.IComparableItem
+import kotlinx.android.synthetic.main.dialog_add_new_operation.*
 import kotlinx.android.synthetic.main.fragment_tracker.*
 import yandexschool.dmpolyakov.money.*
 import yandexschool.dmpolyakov.money.models.Account
@@ -27,6 +29,7 @@ import yandexschool.dmpolyakov.money.ui.base.rv_delegates.EmptyStateDelegateAdap
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.SubtitleDelegateAdapter
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.EmptyStateViewModel
 import yandexschool.dmpolyakov.money.ui.base.rv_delegates.view_models.SubtitleViewModel
+import yandexschool.dmpolyakov.money.ui.tracker.account.AccountFragment
 import yandexschool.dmpolyakov.money.ui.tracker.account.operations.CategoryArrayAdapter
 import yandexschool.dmpolyakov.money.utils.*
 import java.math.BigDecimal
@@ -54,14 +57,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
     }
 
     private lateinit var addNewAccountDialog: AlertDialog
-
-    private val accountAdapter = DiffUtilCompositeAdapter.Builder()
-            .add(AccountDelegateAdapter {
-                presenter.onAccountClick(it)
-            })
-            .add(EmptyStateDelegateAdapter())
-            .add(SubtitleDelegateAdapter())
-            .build()
+    private lateinit var accountAdapter: DiffUtilCompositeAdapter
 
     override fun onResume() {
         super.onResume()
@@ -74,11 +70,18 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        accountAdapter = initAccountAdapter()
         rvOperations.layoutManager = LinearLayoutManager(context)
         rvOperations.adapter = accountAdapter
 
-        fabAddAccount.setOnClickListener {
-            showDialog()
+        if (item_detail_container == null) {
+            fabAddAccount.setOnClickListener {
+                showDialog()
+            }
+        } else {
+            btAddAccount.setOnClickListener {
+                showDialog()
+            }
         }
 
         addNewAccountDialog = AlertDialog.Builder(view.context)
@@ -92,18 +95,47 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                 .create()
     }
 
+    private fun initAccountAdapter() = DiffUtilCompositeAdapter.Builder()
+            .add(AccountDelegateAdapter {
+                if (item_detail_container == null) {
+                    presenter.onAccountClick(it)
+                } else {
+                    showAccountFragment(it)
+                }
+            })
+            .add(EmptyStateDelegateAdapter())
+            .add(SubtitleDelegateAdapter())
+            .build()
+
+    fun showAccountFragment(account: Account) {
+        val transaction = fragmentManager?.beginTransaction()
+        if (transaction != null) {
+            val fragment = AccountFragment()
+            val bundle = Bundle()
+            bundle.putLong("account_id", account.id()!!)
+            fragment.arguments = bundle
+            transaction.replace(R.id.item_detail_container, fragment)
+                    .commit()
+        } else {
+            showToast("transaction doesn't exist")
+        }
+    }
+
     override fun showFinanceOperationDialog(financeOperation: FinanceOperation) {
         with(addOldOperationDialog) {
             show()
 
-            val title = findViewById<TextInputLayout>(R.id.titlePeriodic)
-            val amount = findViewById<TextInputLayout>(R.id.amountPeriodic)
-            val type = findViewById<RadioGroup>(R.id.type)
+            val title: TextInputLayout? = titlePeriodic
+            val amount: TextInputLayout? = amountPeriodic
+            val type: RadioGroup? = type
 
-            val currency = findViewById<Spinner>(R.id.spinnerCurrency)
-            val category = findViewById<Spinner>(R.id.spinnerCategory)
+            val currency: Spinner? = spinnerCurrency
+            val category: Spinner? = spinnerCategory
+            val doPattern: CheckBox? = doPatternCheck
 
-            val days = findViewById<EditText>(R.id.inputDays)
+            doPattern?.visibility = View.GONE
+
+            val days: EditText? = inputDays
 
             if (BuildConfig.DEBUG) {
                 days?.hint = resources.getString(R.string.debug_repeat_across)
@@ -125,6 +157,11 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
             currency?.setSelection(Currency.values().toList().indexOf(financeOperation.currency))
             category?.setSelection(OperationType.Income.getCategories().indexOf(financeOperation.category))
 
+            when (financeOperation.type) {
+                OperationType.Income -> type?.check(R.id.income)
+                OperationType.Expense -> type?.check(R.id.expense)
+            }
+            type?.checkedRadioButtonId
             type?.setOnCheckedChangeListener { radioGroup, id ->
                 val adapter = (category?.adapter as CategoryArrayAdapter)
                 adapter.clear()
@@ -239,8 +276,7 @@ class TrackerFragment : BaseMvpFragment<TrackerPresenter>(), TrackerView {
                         Account(
                                 title = title?.editText?.text.toString(),
                                 amount = BigDecimal(amount),
-                                currency = currency?.selectedItem as Currency,
-                                id = 0L))
+                                currency = currency?.selectedItem as Currency))
                 hideAddAccountDialog()
             }
 

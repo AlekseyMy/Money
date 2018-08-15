@@ -2,7 +2,6 @@ package yandexschool.dmpolyakov.money.models.converters
 
 import android.arch.persistence.room.TypeConverter
 import yandexschool.dmpolyakov.money.OperationType
-import yandexschool.dmpolyakov.money.R
 
 class OperationTypeConverter {
     @TypeConverter

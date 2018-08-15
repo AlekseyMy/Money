@@ -2,21 +2,13 @@ package yandexschool.dmpolyakov.money.repository
 
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
-import yandexschool.dmpolyakov.money.Currency
-import yandexschool.dmpolyakov.money.OperationCategory
-import yandexschool.dmpolyakov.money.OperationType
 import yandexschool.dmpolyakov.money.models.Account
-import yandexschool.dmpolyakov.money.models.FinanceOperation
 import yandexschool.dmpolyakov.money.storage.AppDatabase
 import javax.inject.Inject
 
 
-class AccountRepositoryImpl @Inject constructor(var db: AppDatabase): AccountRepository {
+class AccountRepositoryImpl @Inject constructor(var db: AppDatabase) : AccountRepository {
 
     override fun getAccounts(): Flowable<List<Account>> =
             db.accountDao.getAll()

@@ -17,5 +17,5 @@ object TrackerModule {
                                 accountRepository: AccountRepository,
                                 financeOperationRep: FinanceOperationRepository): TrackerPresenter =
             TrackerPresenter(router, accountRepository, financeOperationRep)
-    
+
 }

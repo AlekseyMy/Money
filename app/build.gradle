@@ -11,20 +11,11 @@ android {
         experimental = true
     }
 
-    signingConfigs {
-        config {
-            keyAlias 'Money'
-            keyPassword 'wqred341513'
-            storeFile file('C:/workspace/KeyStore')
-            storePassword 'wqred341513'
-        }
-    }
-
     compileSdkVersion 28
     defaultConfig {
         applicationId "yandexschool.dmpolyakov.money"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "0.4.0"
         buildTypes {
@@ -88,13 +79,24 @@ android {
         implementation "android.arch.persistence.room:rxjava2:$roomVersion"
         kapt "android.arch.persistence.room:compiler:$roomVersion"
 
+        // AndroidMpChart
+        implementation "com.github.PhilJay:MPAndroidChart:$MpChartVersion"
+
 
         testImplementation "junit:junit:$junit"
         androidTestImplementation "com.android.support.test:runner:$test_runner"
         androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core"
         androidTestImplementation "com.android.support.test:rules:$test_rules"
         androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_contrib"
-        testImplementation "org.robolectric:robolectric:$robolecric_version"
+
+        // Mockito
+//        testImplementation "org.mockito:mockito-all:$mockitoVersion"
+        androidTestImplementation "org.mockito:mockito-all:1.8.4"
+        androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+        testImplementation "org.mockito:mockito-all:1.8.4"
+
+        testImplementation "org.robolectric:robolectric:4.0-alpha-3-SNAPSHOT"
+//        4.0-alpha-3-SNAPSHOT
     }
 
     buildToolsVersion '28.0.1'
@@ -103,10 +105,13 @@ android {
         release {
             debuggable false
             jniDebuggable false
-            signingConfig signingConfigs.config
             renderscriptDebuggable false
             minifyEnabled true
             shrinkResources true
+            multiDexEnabled false
+        }
+        debug {
+            testCoverageEnabled = true
         }
     }
 }

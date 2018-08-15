@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/about"
         android:icon="@drawable/ic_about"
-        android:title="@string/about" />
+        android:title="@string/about"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/tracker"
         android:icon="@drawable/ic_tracker"
-        android:title="@string/tracker" />
+        android:title="@string/tracker"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/navStatistics"
+        android:icon="@drawable/ic_pie_chart"
+        android:title="@string/statistics"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
 
 </menu>
